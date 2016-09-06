@@ -7,22 +7,22 @@ import java.util.List;
 
 public interface UserService {
 	
-	User findById(Long id);
+	//User findById(Long id);
 
-	User findByPassport(String series, String number);
+	User findByPassport(String passportSeriesAndNumber);
 
-	User findByFullName(String first, String second, String middle);
+	//User findByFullName(String first, String second, String middle);
 	
 	void saveUser(User user);
 	
 	void updateUser(User user);
 	
-	void deleteByPassport(String series, String number);
+	void deleteByPassport(String passportSeriesAndNumber);
 
-	void deleteByFullName(String first, String second, String middle);
+	//void deleteByFullName(String first, String second, String middle);
 
 	List<User> findAllSortedUsers();
 	
-	boolean isUserUnique(Long id, String first, String second, String middle, String series, String number);
+	boolean isUserUnique(Long id, String seriesAndNumber);
 
 }
