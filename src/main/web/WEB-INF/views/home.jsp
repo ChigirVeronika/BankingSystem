@@ -6,8 +6,8 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 	<title>Home</title>
-	<link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"></link>
-	<link href="<c:url value='/static/css/app.css' />" rel="stylesheet"></link>
+	<link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"/>
+	<link href="<c:url value='/static/css/app.css' />" rel="stylesheet"/>
 </head>
 <body>
 <div>
@@ -18,7 +18,7 @@
 	<nav>
 		<ul>
 			<li><a href="<c:url value='/list' />">Show User List</a></li>
-			<li><a href="<c:url value='/adduser' />">Add User</a></li>
+			<li><a href="<c:url value='/create-user' />">Add user</a></li>
 		</ul>
 	</nav>
 

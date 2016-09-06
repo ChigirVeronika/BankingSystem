@@ -30,7 +30,7 @@ public class User {
     private Citizenship citizenship;
     private Disability disability;
     private Boolean pensioner;
-    private Long monthIncome;
+    private Double monthIncome;
 
     public Long getId() {
         return id;
@@ -216,11 +216,41 @@ public class User {
         this.pensioner = pensioner;
     }
 
-    public Long getMonthIncome() {
+    public Double getMonthIncome() {
         return monthIncome;
     }
 
-    public void setMonthIncome(Long monthIncome) {
+    public void setMonthIncome(Double monthIncome) {
         this.monthIncome = monthIncome;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", middleName='" + middleName + '\'' +
+                ", birthday=" + birthday +
+                ", gender=" + gender +
+                ", passportSeriesAndNumber='" + passportSeriesAndNumber + '\'' +
+                ", whomGranted='" + whomGranted + '\'' +
+                ", grantedDate=" + grantedDate +
+                ", idNumber='" + idNumber + '\'' +
+                ", birthPlace='" + birthPlace + '\'' +
+                ", accommodationCity=" + accommodationCity +
+                ", accommodationAddress='" + accommodationAddress + '\'' +
+                ", homePhone='" + homePhone + '\'' +
+                ", cellPhone='" + cellPhone + '\'' +
+                ", email='" + email + '\'' +
+                ", workPlace='" + workPlace + '\'' +
+                ", position='" + position + '\'' +
+                ", registrationCity=" + registrationCity +
+                ", maritalStatus=" + maritalStatus +
+                ", citizenship=" + citizenship +
+                ", disability=" + disability +
+                ", pensioner=" + pensioner +
+                ", monthIncome=" + monthIncome +
+                '}';
     }
 }

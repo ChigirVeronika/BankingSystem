@@ -7,6 +7,10 @@ public class MaritalStatus {
     private Long id;
     private String type;
 
+    public MaritalStatus(String type){
+        this.type=type;
+    }
+
     public Long getId() {
         return id;
     }

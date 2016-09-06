@@ -7,6 +7,10 @@ public class RegistrationCity {
     private Long id;
     private String name;
 
+    public RegistrationCity(String name){
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }

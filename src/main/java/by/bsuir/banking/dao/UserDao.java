@@ -9,23 +9,23 @@ import java.util.List;
 
 public interface UserDao {
 
-//	User findById(Long id);
+//	User findById(Long id) throws DaoException ;
 
-	User findByPassport(String series, String number);
+	User findByPassport(String series, String number) throws DaoException ;
 
-//	User findByFullName(String first, String second, String middle);
+//	User findByFullName(String first, String second, String middle) throws DaoException ;
 
-	void saveUser(User user);
+	void saveUser(User user) throws DaoException ;
 
-	void updateUser(User user);
+	void updateUser(User user) throws DaoException ;
 
-	void deleteByPassport(String series, String number);
+	void deleteByPassport(String series, String number) throws DaoException ;
 
-//	void deleteByFullName(String first, String second, String middle);
+//	void deleteByFullName(String first, String second, String middle) throws DaoException ;
 
 	List<User> findAllSortedUsers() throws DaoException;
 
-	boolean isUserUnique(Long id, String first, String second, String middle, String series, String number);
+	boolean isUserUnique(Long id, String series, String number) throws DaoException ;
 
 }
 

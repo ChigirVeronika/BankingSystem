@@ -7,6 +7,10 @@ public class Disability {
     private Long id;
     private String type;
 
+    public Disability(String type){
+        this.type=type;
+    }
+
     public Long getId() {
         return id;
     }

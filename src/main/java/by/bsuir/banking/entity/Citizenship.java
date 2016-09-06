@@ -7,6 +7,10 @@ public class Citizenship {
     private Long id;
     private String name;
 
+    public Citizenship(String name){
+        this.name = name;
+    }
+
     public Long getId() {
         return id;
     }
