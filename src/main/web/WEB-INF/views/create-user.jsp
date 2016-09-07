@@ -9,18 +9,29 @@
     <title>Registration</title>
     <link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"/>
     <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"/>
+    <script src="../js/registrationValidation.js"></script>
+
+    <style>
+        .error {
+            color: red; font-weight: bold;
+        }
+    </style>
 </head>
 
 <body>
 
 <div class="generic-container">
+    <div class="well">
+        <a href="<c:url value='/list' />">User list</a>
+        <a href="<c:url value='/home' />">Home</a>
+    </div>
     <div class="well lead">User</div>
-    <form:form method="POST" modelAttribute="user" class="form-horizontal">
-        <form:input type="hidden" path="id" id="id"/>
+    <form:form method="POST"  modelAttribute="user" class="form-horizontal" onsubmit="return registrationFormValidation();">
+        <form:input type="hidden" path="id" id="id" />
 
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="firstName">First Name</label>
+                <label class="col-md-3 control-lable" for="firstName">First Name*</label>
                 <div class="col-md-7">
                     <form:input type="text" path="firstName" id="firstName" class="form-control input-sm"/>
                     <div class="has-error">
@@ -32,19 +43,7 @@
 
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="lastName">Last Name</label>
-                <div class="col-md-7">
-                    <form:input type="text" path="lastName" id="lastName" class="form-control input-sm" />
-                    <div class="has-error">
-                        <form:errors path="lastName" class="help-inline"/>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="middleName">Middle Name</label>
+                <label class="col-md-3 control-lable" for="middleName">Middle Name*</label>
                 <div class="col-md-7">
                     <form:input type="text" path="middleName" id="middleName" class="form-control input-sm"/>
                     <div class="has-error">
@@ -56,7 +55,19 @@
 
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="birthday">Birthday</label>
+                <label class="col-md-3 control-lable" for="lastName">Last Name*</label>
+                <div class="col-md-7">
+                    <form:input type="text" path="lastName" id="lastName" class="form-control input-sm" />
+                    <div class="has-error">
+                        <form:errors path="lastName" class="help-inline"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-md-12">
+                <label class="col-md-3 control-lable" for="birthday">Birthday*</label>
                 <div class="col-md-7">
                     <form:input type="date" path="birthday" id="birthday" class="form-control input-sm" />
                     <div class="has-error">
@@ -68,7 +79,7 @@
 
         <div class="row">
             <div class="form-group col-md-12">
-                    <label class="col-md-3 control-lable" for="gender">Gender</label>
+                    <label class="col-md-3 control-lable" for="gender">Gender*</label>
                 <div class="col-md-7">
                     <form:radiobutton path="gender" id="gender" value="M"/>Male
                     <form:radiobutton path="gender" id="gender" value="F"/>Female
@@ -84,7 +95,7 @@
 
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="passportSeriesAndNumber">passportSeriesAndNumber</label>
+                <label class="col-md-3 control-lable" for="passportSeriesAndNumber">Passport Series And Number*</label>
                 <div class="col-md-7">
                     <form:input type="text" path="passportSeriesAndNumber" id="passportSeriesAndNumber" class="form-control input-sm"/>
                     <div class="has-error">
@@ -96,7 +107,7 @@
 
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="whomGranted">whomGranted</label>
+                <label class="col-md-3 control-lable" for="whomGranted">Whom Granted*</label>
                 <div class="col-md-7">
                     <form:input type="text" path="whomGranted" id="whomGranted" class="form-control input-sm" />
                     <div class="has-error">
@@ -108,7 +119,7 @@
 
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="grantedDate">grantedDate</label>
+                <label class="col-md-3 control-lable" for="grantedDate">Granted Date*</label>
                 <div class="col-md-7">
                     <form:input type="date" path="grantedDate" id="grantedDate" class="form-control input-sm" />
                     <div class="has-error">
@@ -120,7 +131,7 @@
 
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="idNumber">idNumber</label>
+                <label class="col-md-3 control-lable" for="idNumber">ID Number*</label>
                 <div class="col-md-7">
                     <form:input type="text" path="idNumber" id="idNumber" class="form-control input-sm"/>
                     <div class="has-error">
@@ -132,7 +143,7 @@
 
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="birthPlace">birthPlace</label>
+                <label class="col-md-3 control-lable" for="birthPlace">Birth Place*</label>
                 <div class="col-md-7">
                     <form:input type="text" path="birthPlace" id="birthPlace" class="form-control input-sm" />
                     <div class="has-error">
@@ -144,7 +155,7 @@
 
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="accommodationCity">accommodationCity</label>
+                <label class="col-md-3 control-lable" for="accommodationCity">Accommodation City*</label>
                 <div class="col-md-7">
 
                     <form:select path="accommodationCity" id="accommodationCity" class="form-control input-sm" >
@@ -164,7 +175,7 @@
 
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="accommodationAddress">accommodationAddress</label>
+                <label class="col-md-3 control-lable" for="accommodationAddress">Accommodation Address*</label>
                 <div class="col-md-7">
                     <form:input type="text" path="accommodationAddress" id="accommodationAddress" class="form-control input-sm"/>
                     <div class="has-error">
@@ -176,7 +187,7 @@
 
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="homePhone">homePhone</label>
+                <label class="col-md-3 control-lable" for="homePhone">Home Phone</label>
                 <div class="col-md-7">
                     <form:input type="text" path="homePhone" id="homePhone" class="form-control input-sm"/>
                     <div class="has-error">
@@ -188,7 +199,7 @@
 
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="cellPhone">cellPhone</label>
+                <label class="col-md-3 control-lable" for="cellPhone">Cell Phone</label>
                 <div class="col-md-7">
                     <form:input type="text" path="cellPhone" id="cellPhone" class="form-control input-sm" />
                     <div class="has-error">
@@ -200,7 +211,7 @@
 
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="email">email</label>
+                <label class="col-md-3 control-lable" for="email">Email</label>
                 <div class="col-md-7">
                     <form:input type="text" path="email" id="email" class="form-control input-sm" />
                     <div class="has-error">
@@ -212,7 +223,7 @@
 
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="workPlace">workPlace</label>
+                <label class="col-md-3 control-lable" for="workPlace">Work Place</label>
                 <div class="col-md-7">
                     <form:input type="text" path="workPlace" id="workPlace" class="form-control input-sm"/>
                     <div class="has-error">
@@ -224,7 +235,7 @@
 
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="position">position</label>
+                <label class="col-md-3 control-lable" for="position">Position</label>
                 <div class="col-md-7">
                     <form:input type="text" path="position" id="position" class="form-control input-sm" />
                     <div class="has-error">
@@ -236,14 +247,14 @@
 
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="registrationCity">registrationCity</label>
+                <label class="col-md-3 control-lable" for="registrationCity">Registration City*</label>
                 <div class="col-md-7">
                     <form:select path="registrationCity" id="registrationCity" class="form-control input-sm" >
-                        <form:option value="0" label="Minsk" />
-                        <form:option value="1" label="Grodno" />
-                        <form:option value="2" label="Brest" />
-                        <form:option value="3" label="Gomel" />
-                        <form:option value="4" label="Vitebsk" />
+                        <form:option value="1" label="Minsk" />
+                        <form:option value="2" label="Grodno" />
+                        <form:option value="3" label="Brest" />
+                        <form:option value="4" label="Gomel" />
+                        <form:option value="5" label="Vitebsk" />
                     </form:select>
 
                     <div class="has-error">
@@ -255,11 +266,11 @@
 
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="maritalStatus">maritalStatus</label>
+                <label class="col-md-3 control-lable" for="maritalStatus">Marital Status*</label>
                 <div class="col-md-7">
                     <form:select path="maritalStatus" id="maritalStatus" class="form-control input-sm" >
-                        <form:option value="0" label="not married" />
-                        <form:option value="1" label="married" />
+                        <form:option value="1" label="not married" />
+                        <form:option value="2" label="married" />
                     </form:select>
 
                     <div class="has-error">
@@ -271,12 +282,12 @@
 
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="citizenship">citizenship</label>
+                <label class="col-md-3 control-lable" for="citizenship">Citizenship*</label>
                 <div class="col-md-7">
                     <form:select path="citizenship" id="citizenship" class="form-control input-sm" >
-                        <form:option value="0" label="belarussian" />
-                        <form:option value="1" label="rusiian" />
-                        <form:option value="2" label="british" />
+                        <form:option value="1" label="belarussian" />
+                        <form:option value="2" label="rusiian" />
+                        <form:option value="3" label="british" />
                     </form:select>
                     <div class="has-error">
                         <form:errors path="citizenship" class="help-inline"/>
@@ -287,12 +298,12 @@
 
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="disability">disability</label>
+                <label class="col-md-3 control-lable" for="disability">Disability*</label>
                 <div class="col-md-7">
                     <form:select path="disability" id="disability" class="form-control input-sm" >
-                        <form:option value="0" label="none" />
-                        <form:option value="1" label="some" />
-                        <form:option value="2" label="another" />
+                        <form:option value="1" label="none" />
+                        <form:option value="2" label="some" />
+                        <form:option value="3" label="another" />
                     </form:select>
                     <div class="has-error">
                         <form:errors path="disability" class="help-inline"/>
@@ -303,7 +314,7 @@
 
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="pensioner">pensioner</label>
+                <label class="col-md-3 control-lable" for="pensioner">Pensioner*</label>
                 <div class="col-md-7">
                     <form:checkbox path="pensioner" value="pensioner" label="pensioner" />
 
@@ -317,7 +328,7 @@
 
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="monthIncome">monthIncome</label>
+                <label class="col-md-3 control-lable" for="monthIncome">Month Income</label>
                 <div class="col-md-7">
                     <form:input type="text" path="monthIncome" id="monthIncome" class="form-control input-sm" />
                     <div class="has-error">

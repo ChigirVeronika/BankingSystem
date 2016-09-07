@@ -1,34 +1,80 @@
 package by.bsuir.banking.entity;
 
 
-import java.sql.Date;
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import javax.validation.constraints.Size;
+import java.util.Date;
 
 /**
  * Created by Veranika_Chyhir on 9/5/2016.
  */
 public class User {
     private Long id;
+
+    @NotEmpty(message = "Please fill the field.")
+    @Size(min = 2, max = 25, message = "Value must be between 2 and 25 characters")
     private String firstName;
+
+    @NotEmpty(message = "Please fill the field.")
+    @Size(min = 2, max = 25, message = "Value must be between 2 and 25 characters")
     private String lastName;
+
+    @NotEmpty(message = "Please fill the field.")
+    @Size(min = 2, max = 25, message = "Value must be between 2 and 25 characters")
     private String middleName;
+
+    @NotEmpty(message = "Please fill the field.")
     private Date birthday;
-    private Boolean gender;
+
+    @NotEmpty(message = "Please fill the field.")
+    private String gender;
+
+    @NotEmpty(message = "Please fill the field.")
+    @Size(min = 9, max = 9, message = "Value must be 9 characters")
     private String passportSeriesAndNumber;
+
+    @NotEmpty(message = "Please fill the field.")
     private String whomGranted;
+
+    @NotEmpty(message = "Please fill the field.")
     private Date grantedDate;
+
+    @NotEmpty(message = "Please fill the field.")
+    @Size(min = 2, max = 25, message = "Value must be between 2 and 25 characters")
     private String idNumber;
+
+    @NotEmpty(message = "Please fill the field.")
     private String birthPlace;
+
+    @NotEmpty
     private AccommodationCity accommodationCity;
+
+    @NotEmpty(message = "Please fill the field.")
     private String accommodationAddress;
+
     private String homePhone;
     private String cellPhone;
+
+    @Email
     private String email;
+
     private String workPlace;
     private String position;
+
+    @NotEmpty(message = "Please fill the field.")
     private RegistrationCity registrationCity;
+
+    @NotEmpty(message = "Please fill the field.")
     private MaritalStatus maritalStatus;
+
+    @NotEmpty(message = "Please fill the field.")
     private Citizenship citizenship;
+
+    @NotEmpty(message = "Please fill the field.")
     private Disability disability;
+
     private Boolean pensioner;
     private Double monthIncome;
 
@@ -80,11 +126,11 @@ public class User {
         this.birthday = birthday;
     }
 
-    public Boolean getGender() {
+    public String getGender() {
         return gender;
     }
 
-    public void setGender(Boolean gender) {
+    public void setGender(String gender) {
         this.gender = gender;
     }
 

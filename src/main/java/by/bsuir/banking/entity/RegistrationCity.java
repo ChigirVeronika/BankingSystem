@@ -26,4 +26,12 @@ public class RegistrationCity {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public String toString() {
+        return "RegistrationCity{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

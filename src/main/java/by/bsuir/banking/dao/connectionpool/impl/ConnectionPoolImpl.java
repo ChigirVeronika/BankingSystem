@@ -50,7 +50,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
         String url = "jdbc:mysql://localhost:3306/banking";
         String user = "root";
         String password = "admin";
-        int size = 5;
+        int size = 10;
 
         try {
             Class.forName("org.gjt.mm.mysql.Driver");
@@ -99,7 +99,7 @@ public class ConnectionPoolImpl implements ConnectionPool {
     public void releasePool() throws ConnectionPoolException {
         working = false;
         Connection connection;
-        int realSize = 5;
+        int realSize = 10;
         while (realSize > 0) {
             try {
                 connection = connections.take();

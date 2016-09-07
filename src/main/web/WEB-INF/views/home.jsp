@@ -4,23 +4,26 @@
 
 <html>
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<title>Home</title>
-	<link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"/>
-	<link href="<c:url value='/static/css/app.css' />" rel="stylesheet"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <title>Home</title>
+    <link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"/>
+    <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"/>
 </head>
 <body>
 <div>
-	<div>
-		${success}
-	</div>
-
-	<nav>
-		<ul>
-			<li><a href="<c:url value='/list' />">Show User List</a></li>
-			<li><a href="<c:url value='/create-user' />">Add user</a></li>
-		</ul>
-	</nav>
+    <div class="generic-container">
+        <div>
+            ${success}
+        </div>
+        <div class="well">
+            <nav>
+                <ul>
+                    <li><a href="<c:url value='/list' />">Show User List</a></li>
+                    <li><a href="<c:url value='/create-user' />">Add user</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
 
 </div>
 </body>

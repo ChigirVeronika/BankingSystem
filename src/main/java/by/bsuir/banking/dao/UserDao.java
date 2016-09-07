@@ -12,6 +12,8 @@ public interface UserDao {
 //	User findById(Long id) throws DaoException ;
 
 	User findByPassport(String series, String number) throws DaoException ;
+	User findByEmail(String email) throws DaoException ;
+	User findByIdNumber(String idNumber) throws DaoException ;
 
 //	User findByFullName(String first, String second, String middle) throws DaoException ;
 

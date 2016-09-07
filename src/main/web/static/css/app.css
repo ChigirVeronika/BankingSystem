@@ -4,7 +4,8 @@ body, #mainWrapper {
 }
 
 body, .form-control{
-	font-size:12px!important;
+	font-size:15px!important;
+    font-family: sans-serif;
 }
 
 .floatRight{
@@ -26,7 +27,15 @@ body, .form-control{
   background-color: #EAE7E7;
   border: 1px solid #ddd;
   border-radius: 4px;
-  box-shadow: 0 0 30px black;
+}
+
+.generic-container-add {
+
+  width:96%;
+  margin-left: 20px;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 4px;
 }
 
 .custom-width {

@@ -10,21 +10,44 @@
 </head>
 
 <body>
-	<div class="generic-container">
+	<div class="generic-container-add">
 		<div class="well">
-			<a href="<c:url value='/create-user' />">Add user</a>
+			<nav>
+				<ul>
+					<li><a href="<c:url value='/create-user' />">Add user</a></li>
+					<li><a href="<c:url value='/home' />">Home</a></li>
+				</ul>
+			</nav>
 		</div>
-		<div class="panel panel-default">
+		<div>
 			  <!-- Default panel contents -->
 		  	<div class="panel-heading"><span class="lead">List of Users</span></div>
-			<table class="table table-hover">
+			<table>
 	    		<thead>
 		      		<tr>
-				        <th>Firstname</th>
-				        <th>Middlename</th>
-				        <th>Lastname</th>
+						<th>Last Name</th>
+				        <th>First Name</th>
+				        <th>Middle Name</th>
 				        <th>Birthday</th>
+				        <th>Gender</th>
+						<th>Passport</th>
+						<th>Whom Granted</th>
+						<th>Granted Date</th>
+						<th>Id number</th>
+						<th>Birthplace</th>
+						<th>Accommodation city</th>
+						<th>Accommodation address</th>
+						<th>Home phone</th>
+						<th>Cell phone</th>
 				        <th>Email</th>
+				        <th>Work Place</th>
+				        <th>Position</th>
+				        <th>Registration city</th>
+				        <th>Marital status</th>
+				        <th>Citizenship</th>
+				        <th>Disability</th>
+				        <th>Pensioner</th>
+				        <th>Month Income</th>
 				        <th width="100"></th>
 				        <th width="100"></th>
 					</tr>
@@ -32,13 +55,31 @@
 	    		<tbody>
 				<c:forEach items="${users}" var="user">
 					<tr>
+						<td>${user.lastName}</td>
 						<td>${user.firstName}</td>
 						<td>${user.middleName}</td>
-						<td>${user.lastName}</td>
 						<td>${user.birthday}</td>
+						<td>${user.gender}</td>
+						<td>${user.passportSeriesAndNumber}</td>
+						<td>${user.whomGranted}</td>
+						<td>${user.grantedDate}</td>
+						<td>${user.idNumber}</td>
+						<td>${user.birthPlace}</td>
+						<td>${user.accommodationCity.getName()}</td>
+						<td>${user.accommodationAddress}</td>
+						<td>${user.homePhone}</td>
+						<td>${user.cellPhone}</td>
 						<td>${user.email}</td>
-						<td><a href="<c:url value='/edit-user-${user.email}' />" class="btn btn-success custom-width">edit</a></td>
-						<td><a href="<c:url value='/delete-user-${user.email}' />" class="btn btn-danger custom-width">delete</a></td>
+						<td>${user.workPlace}</td>
+						<td>${user.position}</td>
+						<td>${user.registrationCity.getName()}</td>
+						<td>${user.maritalStatus.getType()}</td>
+						<td>${user.citizenship.getName()}</td>
+						<td>${user.disability.getType()}</td>
+						<td>${user.pensioner}</td>
+						<td>${user.monthIncome}</td>
+						<td><a href="<c:url value='/edit-user-${user.passportSeriesAndNumber}' />" class="btn btn-success custom-width">edit</a></td>
+						<td><a href="<c:url value='/delete-user-${user.passportSeriesAndNumber}' />" class="btn btn-danger custom-width">delete</a></td>
 					</tr>
 				</c:forEach>
 	    		</tbody>

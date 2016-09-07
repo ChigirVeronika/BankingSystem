@@ -6,17 +6,18 @@ import by.bsuir.banking.dao.connectionpool.exception.ConnectionPoolException;
 import by.bsuir.banking.dao.connectionpool.impl.ConnectionPoolImpl;
 import by.bsuir.banking.dao.exception.DaoException;
 import by.bsuir.banking.entity.*;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
 @Repository("userDao")
 public class UserDaoImpl implements UserDao {
+
+    private static final Logger LOGGER = Logger.getLogger(UserDaoImpl.class);
+
     private static final String SELECT_ALL_USERS = "select banking.user.*," +
             " banking.accommodationcity.name as accommodationcity, " +
             " banking.registrationcity.name as registrationcity, " +
@@ -30,15 +31,39 @@ public class UserDaoImpl implements UserDao {
             " left join banking.citizenship on banking.user.citizenship_id=citizenship.id " +
             " left join banking.disability on banking.user.disability_id=disability.id ";
 
+
     private static final String SORTING = " ORDER BY banking.user.lastname ASC;";
     private static final String BY_PASSPORT = " WHERE banking.user.passportnumber=? and banking.user.passportseries=?;";
+    private static final String BY_EMAIL = " WHERE banking.user.email=?;";
+    private static final String BY_ID_NUMBER = " WHERE banking.user.idnumber=?;";
+
     private static final String DELETE_USER = " DELETE FROM banking.user ";
-    private static final String INSERT_USER = " INSERT INTO `banking`.`user` "+
-            "(`firstname`,`middlename`,`lastname`,`birthday`,`gender`,`passportseries`,`passportnumber`,"+//7
-            "`whomgranted`,`granteddate`,`idnumber`,`birthplace`,`accommodationcity_id`,`accommodationaddres`,"+//13
-            "`homephone`,`cellphone`,`email`,`workplace`,`position`,`registrationcity_id`,`maritalstatus_id`,"+//20
-            "`citizenship_id`,`disability_id`,`pensioner`,`monthincome`)"+
+    private static final String INSERT_USER = " INSERT INTO `banking`.`user` " +
+            "(`firstname`,`middlename`,`lastname`,`birthday`,`gender`,`passportseries`,`passportnumber`," +//7
+            "`whomgranted`,`granteddate`,`idnumber`,`birthplace`,`accommodationcity_id`,`accommodationaddres`," +//13
+            "`homephone`,`cellphone`,`email`,`workplace`,`position`,`registrationcity_id`,`maritalstatus_id`," +//20
+            "`citizenship_id`,`disability_id`,`pensioner`,`monthincome`)" +
             "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);";
+    private static final String UPDATE_USER = "UPDATE banking.user " +
+            "SET " +
+            "`firstname`=?,`middlename`=?,`lastname`=?,`birthday`=?,`gender`=?,`passportseries`=?,`passportnumber`=?," +//7
+            "`whomgranted`=?,`granteddate`=?,`idnumber`=?,`birthplace`=?,`accommodationcity_id`=?,`accommodationaddres`=?," +//13
+            "`homephone`=?,`cellphone`=?,`email`=?,`workplace`=?,`position`=?,`registrationcity_id`=?,`maritalstatus_id`=?," +//20
+            "`citizenship_id`=?,`disability_id`=?,`pensioner`=?,`monthincome`=?" +
+            "WHERE id = ?";
+    private static final String SELECT_IDS = " select banking.user.id, " +
+            " banking.accommodationcity.id as id1, " +
+            " banking.registrationcity.id as id2, " +
+            " banking.maritalstatus.id as id3, " +
+            " banking.citizenship.id as id4, " +
+            " banking.disability.id as id5 " +
+            " from banking.user " +
+            " left join banking.accommodationcity on banking.user.accommodationcity_id=banking.accommodationcity.id " +
+            " left join banking.registrationcity on banking.user.registrationcity_id=banking.registrationcity.id " +
+            " left join banking.maritalstatus on banking.user.maritalstatus_id=banking.maritalstatus.id " +
+            " left join banking.citizenship on banking.user.citizenship_id=banking.citizenship.id " +
+            " left join banking.disability on banking.user.disability_id=banking.disability.id " +
+            " where banking.user.id=?; ";
 
     private ConnectionPool pool = ConnectionPoolImpl.getInstance();
 
@@ -51,6 +76,72 @@ public class UserDaoImpl implements UserDao {
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, number);
             statement.setString(2, series);
+            ResultSet rs = statement.executeQuery();
+            list = parseResultSet(rs);
+            if (list == null || list.size() == 0) {
+                return null;
+            }
+            if (list.size() > 1) {
+                throw new DaoException("Received more than one record");
+            }
+
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DaoException("Exception");
+        } finally {
+            try {
+                if (connection != null) {
+                    pool.returnConnection(connection);
+                }
+            } catch (ConnectionPoolException e) {
+                throw new DaoException("Dao Exception", e);
+            }
+        }
+        return list.iterator().next();
+    }
+
+    @Override
+    public User findByEmail(String email) throws DaoException {
+        List<User> list;
+        Connection connection = null;
+        try {
+            connection = pool.getConnection();
+            String sql = SELECT_ALL_USERS + BY_EMAIL;
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, email);
+            ResultSet rs = statement.executeQuery();
+            list = parseResultSet(rs);
+            if (list == null || list.size() == 0) {
+                return null;
+            }
+            if (list.size() > 1) {
+                throw new DaoException("Received more than one record");
+            }
+
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DaoException("Exception");
+        } finally {
+            try {
+                if (connection != null) {
+                    pool.returnConnection(connection);
+                }
+            } catch (ConnectionPoolException e) {
+                throw new DaoException("Dao Exception", e);
+            }
+        }
+        return list.iterator().next();
+    }
+
+    @Override
+    public User findByIdNumber(String idNumber) throws DaoException {
+        List<User> list;
+        Connection connection = null;
+        try {
+
+            connection = pool.getConnection();
+            String sql = SELECT_ALL_USERS + BY_ID_NUMBER;
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, idNumber);
+
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
 
@@ -75,20 +166,110 @@ public class UserDaoImpl implements UserDao {
         return list.iterator().next();
     }
 
+
     public void saveUser(User user) throws DaoException {
 
         Connection connection = null;
         try {
+            fillIds(user);
+
             connection = pool.getConnection();
             String sql = INSERT_USER;
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, user.getFirstName());
-            // TODO: 9/6/2016  
-            statement.setLong(12, user.getAccommodationCity().getId());
-            // TODO: 9/6/2016
+            statement.setString(2, user.getMiddleName());
+            statement.setString(3, user.getLastName());
+            statement.setDate(4, new java.sql.Date(user.getBirthday().getTime()));
+            statement.setString(5, user.getGender());
+            statement.setString(6, user.getPassportSeriesAndNumber().substring(0, 2));
+            statement.setString(7, user.getPassportSeriesAndNumber().substring(2));
+            statement.setString(8, user.getWhomGranted());
+            statement.setDate(9, new java.sql.Date(user.getGrantedDate().getTime()));
+            statement.setString(10, user.getIdNumber());
+            statement.setString(11, user.getBirthPlace());
+            statement.setLong(12, acId);
+            statement.setString(13, user.getAccommodationAddress());
+            statement.setString(14, user.getHomePhone());
+            statement.setString(15, user.getCellPhone());
+            statement.setString(16, user.getEmail());
+            statement.setString(17, user.getWorkPlace());
+            statement.setString(18, user.getPosition());
+            statement.setLong(19, regId);
+            statement.setLong(20, maritalId);
+            statement.setLong(21, cityId);
+            statement.setLong(22, disId);
+            statement.setBoolean(23, user.getPensioner());
+            if(user.getMonthIncome()==null){
+                user.setMonthIncome(0.00);
+            }
             statement.setDouble(24, user.getMonthIncome());
 
+            int count = statement.executeUpdate();
+            // TODO: 9/6/2016 check saving
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DaoException("Exception");
+        } finally {
+            try {
+                if (connection != null) {
+                    pool.returnConnection(connection);
+                }
+            } catch (ConnectionPoolException e) {
+                throw new DaoException("Dao Exception", e);
+            }
+        }
+    }
 
+    private Long acId;
+    private Long regId;
+    private Long maritalId;
+    private Long cityId;
+    private Long disId;
+    private static final String SELECT_AC_ID = "select banking.accommodationcity.id " +
+            "FROM banking.accommodationcity where banking.accommodationcity.id=?;";
+    private static final String SELECT_REG_ID = "select banking.registrationcity.id " +
+            "FROM banking.registrationcity where banking.registrationcity.id=?;";
+    private static final String SELECT_MARITAL_ID = "select banking.maritalstatus.id " +
+            "FROM banking.maritalstatus where banking.maritalstatus.id=?;";
+    private static final String SELECT_CITY_ID = "select banking.citizenship.id " +
+            "FROM banking.citizenship where banking.citizenship.id=?;";
+    private static final String SELECT_DIS_ID = "select banking.disability.id " +
+            "FROM banking.disability where banking.disability.id=?;";
+    private void fillIds(User user) throws DaoException{
+        Connection connection = null;
+        try {
+            connection = pool.getConnection();
+
+            PreparedStatement ps1 = connection.prepareStatement(SELECT_AC_ID);
+            ps1.setLong(1, Long.parseLong(user.getAccommodationCity().getName()));
+            ResultSet rs1 = ps1.executeQuery();
+            while(rs1.next()){
+                acId = rs1.getLong(1);
+            }
+
+            PreparedStatement ps2 = connection.prepareStatement(SELECT_REG_ID);
+            ps2.setLong(1, Long.parseLong(user.getRegistrationCity().getName()));
+            ResultSet rs2 = ps2.executeQuery();
+            while(rs2.next()){
+                regId = rs2.getLong(1);
+            }
+            PreparedStatement ps3 = connection.prepareStatement(SELECT_MARITAL_ID);
+            ps3.setLong(1, Long.parseLong(user.getMaritalStatus().getType()));
+            ResultSet rs3 = ps3.executeQuery();
+            while(rs3.next()){
+                maritalId = rs3.getLong(1);
+            }
+            PreparedStatement ps4 = connection.prepareStatement(SELECT_CITY_ID);
+            ps4.setLong(1, Long.parseLong(user.getCitizenship().getName()));
+            ResultSet rs4 = ps4.executeQuery();
+            while(rs4.next()){
+                cityId = rs4.getLong(1);
+            }
+            PreparedStatement ps5 = connection.prepareStatement(SELECT_DIS_ID);
+            ps5.setLong(1, Long.parseLong(user.getDisability().getType()));
+            ResultSet rs5 = ps5.executeQuery();
+            while(rs5.next()){
+                disId = rs5.getLong(1);
+            }
         } catch (ConnectionPoolException | SQLException e) {
             throw new DaoException("Exception");
         } finally {
@@ -103,7 +284,56 @@ public class UserDaoImpl implements UserDao {
     }
 
     public void updateUser(User user) throws DaoException {
-        // TODO: 9/6/2016  
+        Connection connection = null;
+        try {
+            fillIds(user);
+
+            connection = pool.getConnection();
+            String sql = UPDATE_USER;
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, user.getFirstName());
+            statement.setString(2, user.getMiddleName());
+            statement.setString(3, user.getLastName());
+            statement.setDate(4, new java.sql.Date(user.getBirthday().getTime()));
+            statement.setString(5, user.getGender());
+            statement.setString(6, user.getPassportSeriesAndNumber().substring(0, 2));
+            statement.setString(7, user.getPassportSeriesAndNumber().substring(2));
+            statement.setString(8, user.getWhomGranted());
+            statement.setDate(9, new java.sql.Date(user.getGrantedDate().getTime()));
+            statement.setString(10, user.getIdNumber());
+            statement.setString(11, user.getBirthPlace());
+            statement.setLong(12, acId);
+            statement.setString(13, user.getAccommodationAddress());
+            statement.setString(14, user.getHomePhone());
+            statement.setString(15, user.getCellPhone());
+            statement.setString(16, user.getEmail());
+            statement.setString(17, user.getWorkPlace());
+            statement.setString(18, user.getPosition());
+            statement.setLong(19, regId);
+            statement.setLong(20, maritalId);
+            statement.setLong(21, cityId);
+            statement.setLong(22, disId);
+            statement.setBoolean(23, user.getPensioner());
+            statement.setDouble(24, user.getMonthIncome());
+            statement.setLong(25, user.getId());
+
+            int count = statement.executeUpdate();
+
+            if (count != 1) {
+                throw new DaoException("On update modify more than 1 record: " + count);
+            }
+
+        } catch (ConnectionPoolException | SQLException e) {
+            throw new DaoException("Exception");
+        } finally {
+            try {
+                if (connection != null) {
+                    pool.returnConnection(connection);
+                }
+            } catch (ConnectionPoolException e) {
+                throw new DaoException("Dao Exception", e);
+            }
+        }
     }
 
     public void deleteByPassport(String series, String number) throws DaoException {
@@ -157,8 +387,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     public boolean isUserUnique(Long id, String series, String number) throws DaoException {
-        // TODO: 9/6/2016
-        return false;
+        throw new UnsupportedOperationException();
     }
 
     protected List<User> parseResultSet(ResultSet rs) throws DaoException {
@@ -172,7 +401,7 @@ public class UserDaoImpl implements UserDao {
                 user.setMiddleName(rs.getString("middlename"));
                 user.setLastName(rs.getString("lastname"));
                 user.setBirthday(rs.getDate("birthday"));
-                user.setGender(rs.getBoolean("gender"));
+                user.setGender(rs.getString("gender"));
                 user.setPassportSeriesAndNumber(rs.getString("passportseries") + rs.getString("passportnumber"));
                 user.setWhomGranted(rs.getString("whomgranted"));
                 user.setGrantedDate(rs.getDate("granteddate"));
@@ -191,9 +420,7 @@ public class UserDaoImpl implements UserDao {
                 user.setDisability(new Disability(rs.getString("disability")));
                 user.setPensioner(rs.getBoolean("pensioner"));
                 user.setMonthIncome(rs.getDouble("monthincome"));
-                System.out.println(user.toString());
                 result.add(user);
-                System.out.println("DONE!!!");
             }
         } catch (SQLException e) {
             throw new DaoException("Exception in parseResultSet method", e);
