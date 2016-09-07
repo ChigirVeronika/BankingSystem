@@ -125,21 +125,12 @@ public class UserController {
     }
 
     private boolean validateUser(User user,BindingResult result, UserService userService) throws ServiceException {
-        if (!userService.isUserUnique(user.getId(), user.getPassportSeriesAndNumber())) {
-            FieldError ssoError = new FieldError("user", "passportSeriesAndNumber", messageSource.getMessage("non.unique.PassportSeriesAndNumber", new String[]{user.getPassportSeriesAndNumber()}, Locale.getDefault()));
-            result.addError(ssoError);
-            return false;
-        }
-        if (!userService.isUserIdNumberUnique(user.getId(), user.getIdNumber())) {
-            FieldError ssoError = new FieldError("user", "idNumber", messageSource.getMessage("non.unique.PassportSeriesAndNumber", new String[]{user.getPassportSeriesAndNumber()}, Locale.getDefault()));
-            result.addError(ssoError);
-            return false;
-        }
-        if (!userService.isUserEmailUnique(user.getId(), user.getIdNumber())) {
-            FieldError ssoError = new FieldError("user", "email", messageSource.getMessage("non.unique.PassportSeriesAndNumber", new String[]{user.getPassportSeriesAndNumber()}, Locale.getDefault()));
-            result.addError(ssoError);
-            return false;
-        }
+
+//        if (!userService.isUserEmailUnique(user.getId(), user.getIdNumber())) {
+//            FieldError ssoError = new FieldError("user", "email", messageSource.getMessage("non.unique.PassportSeriesAndNumber", new String[]{user.getPassportSeriesAndNumber()}, Locale.getDefault()));
+//            result.addError(ssoError);
+//            return false;
+//        }
 
         ////
         if (!user.getFirstName().matches("[a-zA-Z]+")){
@@ -169,6 +160,11 @@ public class UserController {
             result.addError(error);
             return false;
         }
+        if (!userService.isUserUnique(user.getId(), user.getPassportSeriesAndNumber())) {
+            FieldError ssoError = new FieldError("user", "passportSeriesAndNumber", messageSource.getMessage("non.unique.PassportSeriesAndNumber", new String[]{user.getPassportSeriesAndNumber()}, Locale.getDefault()));
+            result.addError(ssoError);
+            return false;
+        }
         if(user.getWhomGranted()==null){
             FieldError error = new FieldError("user", "whomGranted", messageSource.getMessage("NotEmpty.user.text", new String[]{user.getPassportSeriesAndNumber()}, Locale.getDefault()));
             result.addError(error);
@@ -178,6 +174,11 @@ public class UserController {
         if(user.getIdNumber()==null){
             FieldError error = new FieldError("user", "idNumber", messageSource.getMessage("NotEmpty.user.text", new String[]{user.getPassportSeriesAndNumber()}, Locale.getDefault()));
             result.addError(error);
+            return false;
+        }
+        if (!userService.isUserIdNumberUnique(user.getId(), user.getIdNumber())) {
+            FieldError ssoError = new FieldError("user", "idNumber", messageSource.getMessage("non.unique.PassportSeriesAndNumber", new String[]{user.getPassportSeriesAndNumber()}, Locale.getDefault()));
+            result.addError(ssoError);
             return false;
         }
         if(user.getBirthPlace()==null){
