@@ -342,6 +342,9 @@ public class UserDaoImpl implements UserDao {
             statement.setLong(21, cityId);
             statement.setLong(22, disId);
             statement.setBoolean(23, user.getPensioner());
+            if (user.getMonthIncome() == null) {
+                user.setMonthIncome(0.00);
+            }
             statement.setDouble(24, user.getMonthIncome());
             statement.setLong(25, user.getId());
 

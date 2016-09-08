@@ -71,7 +71,7 @@ public class UserController {
             return "create-user";
         }
         try {
-            if(!validateUser(user,result,userService)){
+            if (!validateUser(user, result, userService)) {
                 return "create-user";
             }
 
@@ -103,7 +103,7 @@ public class UserController {
             return "create-user";
         }
         try {
-            if(!validateUser(user,result,userService)){
+            if (!validateUser(user, result, userService)) {
                 return "create-user";
             }
             userService.updateUser(user);
@@ -124,7 +124,7 @@ public class UserController {
         return "redirect:/list";
     }
 
-    private boolean validateUser(User user,BindingResult result, UserService userService) throws ServiceException {
+    private boolean validateUser(User user, BindingResult result, UserService userService) throws ServiceException {
 
 //        if (!userService.isUserEmailUnique(user.getId(), user.getIdNumber())) {
 //            FieldError ssoError = new FieldError("user", "email", messageSource.getMessage("non.unique.PassportSeriesAndNumber", new String[]{user.getPassportSeriesAndNumber()}, Locale.getDefault()));
@@ -133,29 +133,29 @@ public class UserController {
 //        }
 
         ////
-        if (!user.getFirstName().matches("[a-zA-Z]+")){
+        if (!user.getFirstName().matches("[a-zA-Z]+")) {
             FieldError error = new FieldError("user", "firstName", messageSource.getMessage("Letters.user.text", new String[]{user.getPassportSeriesAndNumber()}, Locale.getDefault()));
             result.addError(error);
             return false;
         }
-        if (!user.getLastName().matches("[a-zA-Z]+")){
+        if (!user.getLastName().matches("[a-zA-Z]+")) {
             FieldError error = new FieldError("user", "lastName", messageSource.getMessage("Letters.user.text", new String[]{user.getPassportSeriesAndNumber()}, Locale.getDefault()));
             result.addError(error);
             return false;
         }
-        if (!user.getMiddleName().matches("[a-zA-Z]+")){
+        if (!user.getMiddleName().matches("[a-zA-Z]+")) {
             FieldError error = new FieldError("user", "middleName", messageSource.getMessage("Letters.user.text", new String[]{user.getPassportSeriesAndNumber()}, Locale.getDefault()));
             result.addError(error);
             return false;
         }
 
         // TODO: 9/7/2016 birthday
-        if (user.getGender()==null | user.getGender().trim().length()==0){
+        if (user.getGender() == null | user.getGender().trim().length() == 0) {
             FieldError error = new FieldError("user", "gender", messageSource.getMessage("NotEmpty.user.text", new String[]{user.getPassportSeriesAndNumber()}, Locale.getDefault()));
             result.addError(error);
             return false;
         }
-        if(user.getPassportSeriesAndNumber()==null | user.getPassportSeriesAndNumber().trim().length()==0){
+        if (user.getPassportSeriesAndNumber() == null | user.getPassportSeriesAndNumber().trim().length() == 0) {
             FieldError error = new FieldError("user", "passportSeriesAndNumber", messageSource.getMessage("NotEmpty.user.text", new String[]{user.getPassportSeriesAndNumber()}, Locale.getDefault()));
             result.addError(error);
             return false;
@@ -165,13 +165,13 @@ public class UserController {
             result.addError(ssoError);
             return false;
         }
-        if(user.getWhomGranted()==null | user.getWhomGranted().trim().length()==0){
+        if (user.getWhomGranted() == null | user.getWhomGranted().trim().length() == 0) {
             FieldError error = new FieldError("user", "whomGranted", messageSource.getMessage("NotEmpty.user.text", new String[]{user.getPassportSeriesAndNumber()}, Locale.getDefault()));
             result.addError(error);
             return false;
         }
         // TODO: 9/7/2016 granted date
-        if(user.getIdNumber()==null | user.getIdNumber().trim().length()==0){
+        if (user.getIdNumber() == null | user.getIdNumber().trim().length() == 0) {
             FieldError error = new FieldError("user", "idNumber", messageSource.getMessage("NotEmpty.user.text", new String[]{user.getPassportSeriesAndNumber()}, Locale.getDefault()));
             result.addError(error);
             return false;
@@ -181,16 +181,23 @@ public class UserController {
             result.addError(ssoError);
             return false;
         }
-        if(user.getBirthPlace()==null | user.getBirthPlace().trim().length()==0){
+        if (user.getBirthPlace() == null | user.getBirthPlace().trim().length() == 0) {
             FieldError error = new FieldError("user", "birthPlace", messageSource.getMessage("NotEmpty.user.text", new String[]{user.getPassportSeriesAndNumber()}, Locale.getDefault()));
             result.addError(error);
             return false;
         }
-        if(user.getAccommodationAddress()==null | user.getAccommodationAddress().trim().length()==0){
+        if (user.getAccommodationAddress() == null | user.getAccommodationAddress().trim().length() == 0) {
             FieldError error = new FieldError("user", "accommodationAddress", messageSource.getMessage("NotEmpty.user.text", new String[]{user.getPassportSeriesAndNumber()}, Locale.getDefault()));
             result.addError(error);
             return false;
         }
+//        if (user.getMonthIncome() != null)
+//            if (!user.getMonthIncome().toString().matches("[0-9]+")) {
+//                FieldError error = new FieldError("user", "monthIncome", messageSource.getMessage("Numbers.user.text", new String[]{user.getPassportSeriesAndNumber()}, Locale.getDefault()));
+//                result.addError(error);
+//                return false;
+//            }
+
 
         return true;
     }
