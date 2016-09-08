@@ -16,6 +16,7 @@ import java.util.List;
 @Repository("userDao")
 public class UserDaoImpl implements UserDao {
     private static final String MASK = "mask";
+        private static final int MASK_NUMBER = 4;
 
     private static final Logger LOGGER = Logger.getLogger(UserDaoImpl.class);
 
@@ -75,7 +76,7 @@ public class UserDaoImpl implements UserDao {
             connection = pool.getConnection();
             String sql = SELECT_ALL_USERS + BY_PASSPORT;
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, number);
+            statement.setString(1, number+MASK);
             statement.setString(2, series);
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
@@ -141,7 +142,7 @@ public class UserDaoImpl implements UserDao {
             connection = pool.getConnection();
             String sql = SELECT_ALL_USERS + BY_ID_NUMBER;
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, idNumber);
+            statement.setString(1, idNumber+MASK);
 
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
@@ -319,14 +320,20 @@ public class UserDaoImpl implements UserDao {
             statement.setString(11, user.getBirthPlace());
             statement.setLong(12, acId);
             statement.setString(13, user.getAccommodationAddress());
+
             if (user.getHomePhone() == null) {
                 user.setHomePhone(MASK);
+            }else {
+                user.setHomePhone(user.getHomePhone()+MASK);
             }
             statement.setString(14, user.getHomePhone());
-            if (user.getCellPhone() == null) {
+            if (user.getCellPhone() == null ) {
                 user.setCellPhone(MASK);
+            }else{
+                user.setCellPhone(user.getCellPhone()+MASK);
             }
             statement.setString(15, user.getCellPhone());
+
             statement.setString(16, user.getEmail());
             statement.setString(17, user.getWorkPlace());
             statement.setString(18, user.getPosition());
@@ -363,7 +370,7 @@ public class UserDaoImpl implements UserDao {
         try {
             connection = pool.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, number);
+            statement.setString(1, number+MASK);
             statement.setString(2, series);
             int count = statement.executeUpdate();
 
@@ -424,15 +431,15 @@ public class UserDaoImpl implements UserDao {
                 user.setBirthday(rs.getDate("birthday"));
                 user.setGender(rs.getString("gender"));
                 user.setPassportSeriesAndNumber(rs.getString("passportseries") + rs.getString("passportnumber").
-                        substring(0, rs.getString("passportnumber").length() - 4));
+                        substring(0, rs.getString("passportnumber").length() - MASK_NUMBER));
                 user.setWhomGranted(rs.getString("whomgranted"));
                 user.setGrantedDate(rs.getDate("granteddate"));
-                user.setIdNumber(rs.getString("idnumber").substring(0, rs.getString("idnumber").length() - 4));
+                user.setIdNumber(rs.getString("idnumber").substring(0, rs.getString("idnumber").length() - MASK_NUMBER));
                 user.setBirthPlace(rs.getString("birthplace"));
                 user.setAccommodationCity(new AccommodationCity(rs.getString("accommodationcity")));
                 user.setAccommodationAddress(rs.getString("accommodationaddres"));
-                user.setHomePhone(rs.getString("homephone").substring(0, rs.getString("homephone").length() - 4));
-                user.setCellPhone(rs.getString("cellphone").substring(0, rs.getString("cellphone").length() - 4));
+                user.setHomePhone(rs.getString("homephone").substring(0, rs.getString("homephone").length() - MASK_NUMBER));
+                user.setCellPhone(rs.getString("cellphone").substring(0, rs.getString("cellphone").length() - MASK_NUMBER));
                 user.setEmail(rs.getString("email"));
                 user.setWorkPlace(rs.getString("workplace"));
                 user.setPosition(rs.getString("position"));

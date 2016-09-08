@@ -26,7 +26,7 @@
         <a href="<c:url value='/home' />">Home</a>
     </div>
     <div class="well lead">User</div>
-    <form:form method="POST"  modelAttribute="user" class="form-horizontal" onsubmit="return registrationFormValidation();">
+    <form:form method="POST"  modelAttribute="user" class="form-horizontal">
         <form:input type="hidden" path="id" id="id" />
 
         <div class="row">
@@ -67,7 +67,7 @@
 
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="birthday">Birthday*</label>
+                <label class="col-md-3 control-lable" for="birthday">Person Birthday*</label>
                 <div class="col-md-7">
                     <form:input type="date" path="birthday" id="birthday" class="form-control input-sm" />
                     <div class="has-error">
@@ -314,7 +314,7 @@
 
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable" for="pensioner">Pensioner*</label>
+                <label class="col-md-3 control-lable" for="pensioner">Pensioner</label>
                 <div class="col-md-7">
                     <form:checkbox path="pensioner" value="pensioner" label="pensioner" />
 

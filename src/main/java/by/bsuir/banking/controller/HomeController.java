@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @RequestMapping("/")
 @Controller
-public class DefaultController {
+public class HomeController {
     @RequestMapping(value = {"/","/home"}, method = RequestMethod.GET)
     public String goToIndex() {
         return "home";

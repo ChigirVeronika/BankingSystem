@@ -85,7 +85,7 @@ public class UserController {
 
     @RequestMapping(value = {"/edit-user-{passportSeriesAndNumber}"}, method = RequestMethod.GET)
     public String editUser(@PathVariable String passportSeriesAndNumber, ModelMap model) {
-        User user = null;
+        User user;
         try {
             user = userService.findByPassport(passportSeriesAndNumber);
         } catch (ServiceException e) {
@@ -150,12 +150,12 @@ public class UserController {
         }
 
         // TODO: 9/7/2016 birthday
-        if (user.getGender()==null){
+        if (user.getGender()==null | user.getGender().trim().length()==0){
             FieldError error = new FieldError("user", "gender", messageSource.getMessage("NotEmpty.user.text", new String[]{user.getPassportSeriesAndNumber()}, Locale.getDefault()));
             result.addError(error);
             return false;
         }
-        if(user.getPassportSeriesAndNumber()==null){
+        if(user.getPassportSeriesAndNumber()==null | user.getPassportSeriesAndNumber().trim().length()==0){
             FieldError error = new FieldError("user", "passportSeriesAndNumber", messageSource.getMessage("NotEmpty.user.text", new String[]{user.getPassportSeriesAndNumber()}, Locale.getDefault()));
             result.addError(error);
             return false;
@@ -165,13 +165,13 @@ public class UserController {
             result.addError(ssoError);
             return false;
         }
-        if(user.getWhomGranted()==null){
+        if(user.getWhomGranted()==null | user.getWhomGranted().trim().length()==0){
             FieldError error = new FieldError("user", "whomGranted", messageSource.getMessage("NotEmpty.user.text", new String[]{user.getPassportSeriesAndNumber()}, Locale.getDefault()));
             result.addError(error);
             return false;
         }
         // TODO: 9/7/2016 granted date
-        if(user.getIdNumber()==null){
+        if(user.getIdNumber()==null | user.getIdNumber().trim().length()==0){
             FieldError error = new FieldError("user", "idNumber", messageSource.getMessage("NotEmpty.user.text", new String[]{user.getPassportSeriesAndNumber()}, Locale.getDefault()));
             result.addError(error);
             return false;
@@ -181,12 +181,12 @@ public class UserController {
             result.addError(ssoError);
             return false;
         }
-        if(user.getBirthPlace()==null){
+        if(user.getBirthPlace()==null | user.getBirthPlace().trim().length()==0){
             FieldError error = new FieldError("user", "birthPlace", messageSource.getMessage("NotEmpty.user.text", new String[]{user.getPassportSeriesAndNumber()}, Locale.getDefault()));
             result.addError(error);
             return false;
         }
-        if(user.getAccommodationAddress()==null){
+        if(user.getAccommodationAddress()==null | user.getAccommodationAddress().trim().length()==0){
             FieldError error = new FieldError("user", "accommodationAddress", messageSource.getMessage("NotEmpty.user.text", new String[]{user.getPassportSeriesAndNumber()}, Locale.getDefault()));
             result.addError(error);
             return false;
