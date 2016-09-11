@@ -1,5 +1,6 @@
 package by.bsuir.banking.dao.impl;
 
+import by.bsuir.banking.dao.AbstractDao;
 import by.bsuir.banking.dao.UserDao;
 import by.bsuir.banking.dao.connectionpool.ConnectionPool;
 import by.bsuir.banking.dao.connectionpool.exception.ConnectionPoolException;
@@ -14,7 +15,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 @Repository("userDao")
-public class UserDaoImpl implements UserDao {
+public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {
     private static final String MASK = "mask";
         private static final int MASK_NUMBER = 4;
 

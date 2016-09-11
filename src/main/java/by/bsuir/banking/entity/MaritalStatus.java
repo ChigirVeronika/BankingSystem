@@ -1,11 +1,30 @@
 package by.bsuir.banking.entity;
 
-/**
- * Created by Veranika_Chyhir on 9/5/2016.
- */
+import org.hibernate.annotations.Cascade;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "maritalstatus")
 public class MaritalStatus {
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+    @Column(name = "type")
     private String type;
+
+    @OneToOne(mappedBy="maritalStatus")
+    @Cascade(value=org.hibernate.annotations.CascadeType.SAVE_UPDATE)
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public MaritalStatus(String type){
         this.type=type;

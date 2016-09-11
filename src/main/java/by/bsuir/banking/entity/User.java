@@ -4,30 +4,41 @@ package by.bsuir.banking.entity;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
+import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.Set;
 
-/**
- * Created by Veranika_Chyhir on 9/5/2016.
- */
+@Entity
+@Table(name = "user")
 public class User {
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "creator")
+    private Set<Deposit> deposits;
+
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
+    @Column(name = "firstname")
     @NotEmpty(message = "Please fill the field.")
     @Size(min = 2, max = 25, message = "Value must be between 2 and 25 characters")
     private String firstName;
 
+    @Column(name = "lastname")
     @NotEmpty(message = "Please fill the field.")
     @Size(min = 2, max = 25, message = "Value must be between 2 and 25 characters")
     private String lastName;
 
+    @Column(name = "middlename")
     @NotEmpty(message = "Please fill the field.")
     @Size(min = 2, max = 25, message = "Value must be between 2 and 25 characters")
     private String middleName;
 
+    @Column(name = "birthday")
     @NotEmpty(message = "Please fill the field.")
     private Date birthday;
 
+    @Column(name = "gender")
     @NotEmpty(message = "Please fill the field.")
     private String gender;
 
@@ -35,48 +46,73 @@ public class User {
     @Size(min = 9, max = 9, message = "Value must be 9 characters")
     private String passportSeriesAndNumber;
 
+    @Column(name = "whomgranted")
     @NotEmpty(message = "Please fill the field.")
     private String whomGranted;
 
+    @Column(name = "granteddate")
     @NotEmpty(message = "Please fill the field.")
     private Date grantedDate;
 
+    @Column(name = "idnumber")
     @NotEmpty(message = "Please fill the field.")
     @Size(min = 2, max = 25, message = "Value must be between 2 and 25 characters")
     private String idNumber;
 
+    @Column(name = "birthplace")
     @NotEmpty(message = "Please fill the field.")
     private String birthPlace;
 
     @NotEmpty
+    @OneToOne
+    @PrimaryKeyJoinColumn
     private AccommodationCity accommodationCity;
 
     @NotEmpty(message = "Please fill the field.")
     private String accommodationAddress;
 
+    @Column(name = "homephone")
     private String homePhone;
+    @Column(name = "cellphone")
     private String cellPhone;
 
     @Email
+    @Column(name = "email")
     private String email;
 
     private String workPlace;
     private String position;
 
     @NotEmpty(message = "Please fill the field.")
+    @OneToOne
+    @PrimaryKeyJoinColumn
     private RegistrationCity registrationCity;
 
     @NotEmpty(message = "Please fill the field.")
+    @OneToOne
+    @PrimaryKeyJoinColumn
     private MaritalStatus maritalStatus;
 
     @NotEmpty(message = "Please fill the field.")
+    @OneToOne
+    @PrimaryKeyJoinColumn
     private Citizenship citizenship;
 
     @NotEmpty(message = "Please fill the field.")
+    @OneToOne
+    @PrimaryKeyJoinColumn
     private Disability disability;
 
     private Boolean pensioner;
     private Double monthIncome;
+
+    public Set<Deposit> getDeposits() {
+        return deposits;
+    }
+
+    public void setDeposits(Set<Deposit> deposits) {
+        this.deposits = deposits;
+    }
 
     public Long getId() {
         return id;

@@ -26,7 +26,7 @@
         <a href="<c:url value='/home' />">Home</a>
     </div>
     <div class="well lead">User</div>
-    <form:form method="POST"  modelAttribute="user" class="form-horizontal">
+    <form:form method="POST" onsubmit="return registrationFormValidation();"  modelAttribute="user" class="form-horizontal">
         <form:input type="hidden" path="id" id="id" />
 
         <div class="row">
