@@ -18,6 +18,9 @@ public class RegistrationCity {
     @Cascade(value=org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private User user;
 
+    public RegistrationCity() {
+    }
+
     public User getUser() {
         return user;
     }

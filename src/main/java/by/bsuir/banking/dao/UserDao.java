@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface UserDao {
 
-//	User findById(Long id) throws DaoException ;
+	User findById(Long id);
 
 	User findByPassport(String series, String number) throws DaoException ;
 	User findByEmail(String email) throws DaoException ;

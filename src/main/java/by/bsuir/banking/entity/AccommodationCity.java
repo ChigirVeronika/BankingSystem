@@ -18,6 +18,9 @@ public class AccommodationCity {
     @Cascade(value=org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private User user;
 
+    public AccommodationCity() {
+    }
+
     public User getUser() {
         return user;
     }

@@ -30,6 +30,9 @@ public class Bill {
         this.deposit = deposit;
     }
 
+    public Bill() {
+    }
+
     public Long getId() {
         return id;
     }

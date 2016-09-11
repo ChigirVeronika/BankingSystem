@@ -42,9 +42,7 @@ public class User {
     @NotEmpty(message = "Please fill the field.")
     private String gender;
 
-    @NotEmpty(message = "Please fill the field.")
-    @Size(min = 9, max = 9, message = "Value must be 9 characters")
-    private String passportSeriesAndNumber;
+    //private String passportSeriesAndNumber;
 
     @Column(name = "whomgranted")
     @NotEmpty(message = "Please fill the field.")
@@ -68,6 +66,7 @@ public class User {
     @PrimaryKeyJoinColumn
     private AccommodationCity accommodationCity;
 
+    @Column(name = "accommodationaddres")
     @NotEmpty(message = "Please fill the field.")
     private String accommodationAddress;
 
@@ -80,7 +79,9 @@ public class User {
     @Column(name = "email")
     private String email;
 
+    @Column(name="workplace")
     private String workPlace;
+    @Column(name="position")
     private String position;
 
     @NotEmpty(message = "Please fill the field.")
@@ -103,8 +104,35 @@ public class User {
     @PrimaryKeyJoinColumn
     private Disability disability;
 
+    @Column(name="pensioner")
     private Boolean pensioner;
+    @Column(name="monthincome")
     private Double monthIncome;
+
+    @Column(name = "passportseries")
+    private String passportSeries;
+
+    @Column(name = "passportnumber")
+    private String passportNumber;
+
+    public User() {
+    }
+
+    public String getPassportSeries() {
+        return passportSeries;
+    }
+
+    public void setPassportSeries(String passportSeries) {
+        this.passportSeries = passportSeries;
+    }
+
+    public String getPassportNumber() {
+        return passportNumber;
+    }
+
+    public void setPassportNumber(String passportNumber) {
+        this.passportNumber = passportNumber;
+    }
 
     public Set<Deposit> getDeposits() {
         return deposits;
@@ -170,13 +198,13 @@ public class User {
         this.gender = gender;
     }
 
-    public String getPassportSeriesAndNumber() {
-        return passportSeriesAndNumber;
-    }
-
-    public void setPassportSeriesAndNumber(String passportSeriesAndNumber) {
-        this.passportSeriesAndNumber = passportSeriesAndNumber;
-    }
+//    public String getPassportSeriesAndNumber() {
+//        return passportSeriesAndNumber;
+//    }
+//
+//    public void setPassportSeriesAndNumber(String passportSeriesAndNumber) {
+//        this.passportSeriesAndNumber = passportSeriesAndNumber;
+//    }
 
     public String getWhomGranted() {
         return whomGranted;
@@ -315,7 +343,6 @@ public class User {
                 ", middleName='" + middleName + '\'' +
                 ", birthday=" + birthday +
                 ", gender=" + gender +
-                ", passportSeriesAndNumber='" + passportSeriesAndNumber + '\'' +
                 ", whomGranted='" + whomGranted + '\'' +
                 ", grantedDate=" + grantedDate +
                 ", idNumber='" + idNumber + '\'' +

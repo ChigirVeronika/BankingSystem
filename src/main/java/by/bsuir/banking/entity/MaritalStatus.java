@@ -18,6 +18,9 @@ public class MaritalStatus {
     @Cascade(value=org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private User user;
 
+    public MaritalStatus() {
+    }
+
     public User getUser() {
         return user;
     }

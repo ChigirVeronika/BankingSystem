@@ -1,7 +1,14 @@
 package by.bsuir.banking.service;
 
-/**
- * Created by Veranika on 9/11/2016.
- */
+
+import by.bsuir.banking.entity.Bill;
+
+import java.util.List;
+
 public interface BillService {
+    Bill findById(Long id);
+    void saveBill(Bill bill);
+    void updateBill(Bill bill);
+    void deleteBill(Long depositId);
+    List<Bill> findAllBillsOfDeposit(Long depositId);
 }

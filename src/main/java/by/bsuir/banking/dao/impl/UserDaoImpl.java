@@ -9,15 +9,17 @@ import by.bsuir.banking.dao.exception.DaoException;
 import by.bsuir.banking.entity.*;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
 
 @Repository("userDao")
+@Transactional
 public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {
     private static final String MASK = "mask";
-        private static final int MASK_NUMBER = 4;
+    private static final int MASK_NUMBER = 4;
 
     private static final Logger LOGGER = Logger.getLogger(UserDaoImpl.class);
 
@@ -77,7 +79,7 @@ public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {
             connection = pool.getConnection();
             String sql = SELECT_ALL_USERS + BY_PASSPORT;
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, number+MASK);
+            statement.setString(1, number + MASK);
             statement.setString(2, series);
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
@@ -143,7 +145,7 @@ public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {
             connection = pool.getConnection();
             String sql = SELECT_ALL_USERS + BY_ID_NUMBER;
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, idNumber+MASK);
+            statement.setString(1, idNumber + MASK);
 
             ResultSet rs = statement.executeQuery();
             list = parseResultSet(rs);
@@ -184,8 +186,8 @@ public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {
             statement.setString(3, user.getLastName());
             statement.setDate(4, new java.sql.Date(user.getBirthday().getTime()));
             statement.setString(5, user.getGender());
-            statement.setString(6, user.getPassportSeriesAndNumber().substring(0, 2));
-            statement.setString(7, user.getPassportSeriesAndNumber().substring(2) + MASK);
+            statement.setString(6, user.getPassportSeries());
+            statement.setString(7, user.getPassportNumber() + MASK);
             statement.setString(8, user.getWhomGranted());
             statement.setDate(9, new java.sql.Date(user.getGrantedDate().getTime()));
             statement.setString(10, user.getIdNumber() + MASK);
@@ -195,14 +197,14 @@ public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {
 
             if (user.getHomePhone() == null) {
                 user.setHomePhone(MASK);
-            }else {
-                user.setHomePhone(user.getHomePhone()+MASK);
+            } else {
+                user.setHomePhone(user.getHomePhone() + MASK);
             }
             statement.setString(14, user.getHomePhone());
-            if (user.getCellPhone() == null ) {
+            if (user.getCellPhone() == null) {
                 user.setCellPhone(MASK);
-            }else{
-                user.setCellPhone(user.getCellPhone()+MASK);
+            } else {
+                user.setCellPhone(user.getCellPhone() + MASK);
             }
             statement.setString(15, user.getCellPhone());
 
@@ -313,8 +315,8 @@ public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {
             statement.setString(3, user.getLastName());
             statement.setDate(4, new java.sql.Date(user.getBirthday().getTime()));
             statement.setString(5, user.getGender());
-            statement.setString(6, user.getPassportSeriesAndNumber().substring(0, 2));
-            statement.setString(7, user.getPassportSeriesAndNumber().substring(2) + MASK);
+            statement.setString(6, user.getPassportSeries());
+            statement.setString(7, user.getPassportNumber() + MASK);
             statement.setString(8, user.getWhomGranted());
             statement.setDate(9, new java.sql.Date(user.getGrantedDate().getTime()));
             statement.setString(10, user.getIdNumber() + MASK);
@@ -324,14 +326,14 @@ public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {
 
             if (user.getHomePhone() == null) {
                 user.setHomePhone(MASK);
-            }else {
-                user.setHomePhone(user.getHomePhone()+MASK);
+            } else {
+                user.setHomePhone(user.getHomePhone() + MASK);
             }
             statement.setString(14, user.getHomePhone());
-            if (user.getCellPhone() == null ) {
+            if (user.getCellPhone() == null) {
                 user.setCellPhone(MASK);
-            }else{
-                user.setCellPhone(user.getCellPhone()+MASK);
+            } else {
+                user.setCellPhone(user.getCellPhone() + MASK);
             }
             statement.setString(15, user.getCellPhone());
 
@@ -374,7 +376,7 @@ public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {
         try {
             connection = pool.getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, number+MASK);
+            statement.setString(1, number + MASK);
             statement.setString(2, series);
             int count = statement.executeUpdate();
 
@@ -434,7 +436,8 @@ public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {
                 user.setLastName(rs.getString("lastname"));
                 user.setBirthday(rs.getDate("birthday"));
                 user.setGender(rs.getString("gender"));
-                user.setPassportSeriesAndNumber(rs.getString("passportseries") + rs.getString("passportnumber").
+                user.setPassportSeries(rs.getString("passportseries"));
+                user.setPassportNumber(rs.getString("passportnumber").
                         substring(0, rs.getString("passportnumber").length() - MASK_NUMBER));
                 user.setWhomGranted(rs.getString("whomgranted"));
                 user.setGrantedDate(rs.getDate("granteddate"));
@@ -461,8 +464,9 @@ public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {
         return result;
     }
 
-    public User findById(Long id) throws DaoException {
-        return null;
+    public User findById(Long id) {
+        User user = getByKey(id);
+        return user;
     }
 
     public User findByFullName(String first, String second, String middle) throws DaoException {

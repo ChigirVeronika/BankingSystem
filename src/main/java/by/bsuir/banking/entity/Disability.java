@@ -18,6 +18,9 @@ public class Disability {
     @Cascade(value=org.hibernate.annotations.CascadeType.SAVE_UPDATE)
     private User user;
 
+    public Disability() {
+    }
+
     public User getUser() {
         return user;
     }

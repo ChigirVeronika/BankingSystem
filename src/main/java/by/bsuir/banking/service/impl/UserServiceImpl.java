@@ -2,6 +2,7 @@ package by.bsuir.banking.service.impl;
 
 import by.bsuir.banking.dao.UserDao;
 import by.bsuir.banking.dao.exception.DaoException;
+import by.bsuir.banking.dao.impl.UserDaoImpl;
 import by.bsuir.banking.entity.User;
 import by.bsuir.banking.service.UserService;
 import by.bsuir.banking.service.exception.ServiceException;
@@ -19,6 +20,11 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDao dao;
+
+    public UserServiceImpl(){}
+    public UserServiceImpl(UserDaoImpl dao){
+        this.dao = dao;
+    }
 
     public User findByPassport(String passportSeriesAndNumber) throws ServiceException {
         User user;
@@ -110,7 +116,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public User findById(Long id) {
-        return null;
+
+        return dao.findById(id);
     }
 
     public User findByFullName(String first, String second, String middle) {

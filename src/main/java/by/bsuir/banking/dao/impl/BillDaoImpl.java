@@ -34,8 +34,7 @@ public class BillDaoImpl  extends AbstractDao<Long, Bill> implements BillDao {
 
     @Override
     public List<Bill> findAllDepositBills(Long depositId) {
-        Criteria criteria = createEntityCriteria().addOrder(
-                Order.asc("name"));
+        Criteria criteria = createEntityCriteria();
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         criteria.add(Restrictions.eq("deposit_id", depositId));
         List<Bill> bills = (List<Bill>)criteria.list();

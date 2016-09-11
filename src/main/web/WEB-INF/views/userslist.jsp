@@ -48,8 +48,7 @@
 				        <th>Disability</th>
 				        <th>Pensioner</th>
 				        <th>Month Income</th>
-				        <th width="100"></th>
-				        <th width="100"></th>
+				        <th width="200"></th>
 					</tr>
 		    	</thead>
 	    		<tbody>
@@ -60,7 +59,7 @@
 						<td>${user.middleName}</td>
 						<td>${user.birthday}</td>
 						<td>${user.gender}</td>
-						<td>${user.passportSeriesAndNumber}</td>
+						<td>${user.passportSeries}${user.passportNumber}</td>
 						<td>${user.whomGranted}</td>
 						<td>${user.grantedDate}</td>
 						<td>${user.idNumber}</td>
@@ -78,8 +77,7 @@
 						<td>${user.disability.getType()}</td>
 						<td>${user.pensioner}</td>
 						<td>${user.monthIncome}</td>
-						<td><a href="<c:url value='/edit-user-${user.passportSeriesAndNumber}' />" class="btn btn-success custom-width">edit</a></td>
-						<td><a href="<c:url value='/delete-user-${user.passportSeriesAndNumber}' />" class="btn btn-danger custom-width">delete</a></td>
+						<td><a href="<c:url value='/create-deposit-${user.id}' />" class="btn btn-warning custom-width">deposit</a></td>
 					</tr>
 				</c:forEach>
 	    		</tbody>

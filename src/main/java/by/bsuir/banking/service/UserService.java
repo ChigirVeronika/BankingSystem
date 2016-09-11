@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface UserService {
 	
-	//User findById(Long id);
+	User findById(Long id);
 
 	User findByPassport(String passportSeriesAndNumber) throws ServiceException;
 	User findByEmail(String email) throws ServiceException;

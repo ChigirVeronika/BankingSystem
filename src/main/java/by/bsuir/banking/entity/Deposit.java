@@ -1,6 +1,7 @@
 package by.bsuir.banking.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Future;
 import java.util.Date;
 import java.util.Set;
 
@@ -17,15 +18,17 @@ public class Deposit {
     @Column(name = "type")
     private String type;
     @Column(name = "agreementnumber")
-    private Integer agreementnumber;
+    private Integer agreementNumber;
     @Column(name = "money")
     private String money;
+
     @Column(name = "startdate")
-    private Date startdate;
+    private Date startDate;
+    @Future
     @Column(name = "enddate")
-    private Date enddate;
+    private Date endDate;
     @Column(name = "moneysum")
-    private Long moneysum;
+    private Long moneySum;
     @Column(name = "percent")
     private Integer percent;
 
@@ -37,16 +40,24 @@ public class Deposit {
     private Set<Bill> bills;
 
     public Deposit(){}
-    public Deposit(Long moneysum){
-        this.moneysum = moneysum;
+    public Deposit(Long moneySum){
+        this.moneySum = moneySum;
     }
 
-    public Set<Bill> getBills() {
-        return bills;
-    }
-
-    public void setBills(Set<Bill> bills) {
-        this.bills = bills;
+    @Override
+    public String toString() {
+        return "Deposit{" +
+                "id=" + id +
+                ", type='" + type + '\'' +
+                ", agreementNumber=" + agreementNumber +
+                ", money='" + money + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", moneySum=" + moneySum +
+                ", percent=" + percent +
+                ", creator=" + creator +
+                ", bills=" + bills +
+                '}';
     }
 
     public Long getId() {
@@ -65,12 +76,12 @@ public class Deposit {
         this.type = type;
     }
 
-    public Integer getAgreementnumber() {
-        return agreementnumber;
+    public Integer getAgreementNumber() {
+        return agreementNumber;
     }
 
-    public void setAgreementnumber(Integer agreementnumber) {
-        this.agreementnumber = agreementnumber;
+    public void setAgreementNumber(Integer agreementNumber) {
+        this.agreementNumber = agreementNumber;
     }
 
     public String getMoney() {
@@ -81,28 +92,28 @@ public class Deposit {
         this.money = money;
     }
 
-    public Date getStartdate() {
-        return startdate;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setStartdate(Date startdate) {
-        this.startdate = startdate;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
-    public Date getEnddate() {
-        return enddate;
+    public Date getEndDate() {
+        return endDate;
     }
 
-    public void setEnddate(Date enddate) {
-        this.enddate = enddate;
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
-    public Long getMoneysum() {
-        return moneysum;
+    public Long getMoneySum() {
+        return moneySum;
     }
 
-    public void setMoneysum(Long moneysum) {
-        this.moneysum = moneysum;
+    public void setMoneySum(Long moneySum) {
+        this.moneySum = moneySum;
     }
 
     public Integer getPercent() {
@@ -121,18 +132,11 @@ public class Deposit {
         this.creator = creator;
     }
 
-    @Override
-    public String toString() {
-        return "Deposit{" +
-                "id=" + id +
-                ", type='" + type + '\'' +
-                ", agreementnumber=" + agreementnumber +
-                ", money='" + money + '\'' +
-                ", startdate=" + startdate +
-                ", enddate=" + enddate +
-                ", moneysum=" + moneysum +
-                ", percent=" + percent +
-                ", creator=" + creator +
-                '}';
+    public Set<Bill> getBills() {
+        return bills;
+    }
+
+    public void setBills(Set<Bill> bills) {
+        this.bills = bills;
     }
 }
