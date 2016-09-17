@@ -12,8 +12,10 @@ import java.util.Set;
 @Entity
 @Table(name = "user")
 public class User {
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "creator")
-    private Set<Deposit> deposits;
+
+
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "user")
+    private Set<Bill> bills;
 
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "id")
@@ -118,6 +120,14 @@ public class User {
     public User() {
     }
 
+    public Set<Bill> getBills() {
+        return bills;
+    }
+
+    public void setBills(Set<Bill> bills) {
+        this.bills = bills;
+    }
+
     public String getPassportSeries() {
         return passportSeries;
     }
@@ -132,14 +142,6 @@ public class User {
 
     public void setPassportNumber(String passportNumber) {
         this.passportNumber = passportNumber;
-    }
-
-    public Set<Deposit> getDeposits() {
-        return deposits;
-    }
-
-    public void setDeposits(Set<Deposit> deposits) {
-        this.deposits = deposits;
     }
 
     public Long getId() {

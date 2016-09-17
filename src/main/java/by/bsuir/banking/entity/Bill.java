@@ -24,6 +24,10 @@ public class Bill {
     @JoinColumn(name = "deposit_id")
     private Deposit deposit;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public Bill(String name, String number, String code, String active, Long moneySum) {
         this.name = name;
         this.number = number;
@@ -33,6 +37,14 @@ public class Bill {
     }
 
     public Bill() {
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public Long getMoneySum() {

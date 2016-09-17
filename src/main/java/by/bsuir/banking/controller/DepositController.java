@@ -49,52 +49,26 @@ public class DepositController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
     }
 
-    @RequestMapping(value = {"/create-deposit-{userId}"}, method = RequestMethod.GET)
-    public String newDeposit(ModelMap model, @PathVariable Long userId) {
-        Deposit deposit = new Deposit();
+    @RequestMapping(value = {"/choose-deposit-{userId}"}, method = RequestMethod.GET)
+    public String showChooseDepositPage(ModelMap model, @PathVariable Long userId) {
         model.addAttribute("userId", userId);
-        model.addAttribute("deposit", deposit);
         model.addAttribute("edit", false);
-        return "create-deposit";
+        return "choose-deposit";
     }
 
-    @RequestMapping(value = {"/create-deposit-{userId}"}, method = RequestMethod.POST)
-    public String saveDeposit(@Valid Deposit deposit, ModelMap model, BindingResult result,
+    @RequestMapping(value = {"/choose-deposit-{userId}"}, method = RequestMethod.POST)
+    public String saveUserBill(ModelMap model, BindingResult result,
                               @PathVariable Long userId) {
+        model.addAttribute("userId", userId);
         if (result.hasErrors()) {
-            return "create-deposit-{userId}";
+            return "choose-deposit";
         }
-//        Date date = new Date();
-//        Timestamp time = new Timestamp(date.getTime());
 
-
-        User user = userService.findById(userId);
-        deposit.setCreator(user);
-        depositService.saveDeposit(deposit);
-
-//        Bill moneyBill = new Bill(
-//                "moneyBill " + user.getIdNumber(),
-//                String.valueOf(111111111111L) + user.getId().toString(),
-//                "code",
-//                "passive",
-//                deposit);
-//        Bill percentBill = new Bill(
-//                "percentBill " + user.getIdNumber(),
-//                String.valueOf(222222222222L) + user.getId().toString(),
-//                "code",
-//                "passive",
-//                deposit);
-//        billService.saveBill(moneyBill);
-//        billService.saveBill(percentBill);
-
-        //Future<ClassLoaderServiceImpl.Work> future = asyncWorker.work();
-        // TODO: 9/11/2016  
-        //return "redirect:/depositlist";// TODO: 9/11/2016
         return "redirect:/home";
     }
 
     @RequestMapping(value = {"/delete-deposit-{agreementNumber}"}, method = RequestMethod.GET)
-    public String deleteDeposit(@PathVariable Long agreementNumber) {
+    public String deleteUserBill(@PathVariable Long agreementNumber) {
         depositService.deleteDeposit(agreementNumber);
         return "redirect:/home";
     }

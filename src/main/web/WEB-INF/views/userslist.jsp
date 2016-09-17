@@ -47,7 +47,7 @@
 						<td>${user.grantedDate}</td>
 						<td>${user.idNumber}</td>
 						<td>${user.email}</td>
-						<td><a href="<c:url value='/create-deposit-${user.id}' />" class="btn btn-warning custom-width">deposit</a></td>
+						<td><a href="<c:url value='/choose-deposit-${user.id}' />" class="btn btn-warning custom-width">deposit</a></td>
 					</tr>
 				</c:forEach>
 	    		</tbody>

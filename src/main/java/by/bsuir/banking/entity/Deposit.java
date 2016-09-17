@@ -24,16 +24,15 @@ public class Deposit {
 
     @Column(name = "startdate")
     private Date startDate;
-    @Future
+
     @Column(name = "enddate")
     private Date endDate;
 
+    @Column(name = "name")
+    private String name;
+
     @Column(name = "percent")
     private Integer percent;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User creator;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "deposit")
     private Set<Bill> bills;
@@ -50,11 +49,17 @@ public class Deposit {
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
                 ", percent=" + percent +
-                ", creator=" + creator +
                 ", bills=" + bills +
                 '}';
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
     public Long getId() {
         return id;
     }
@@ -109,14 +114,6 @@ public class Deposit {
 
     public void setPercent(Integer percent) {
         this.percent = percent;
-    }
-
-    public User getCreator() {
-        return creator;
-    }
-
-    public void setCreator(User creator) {
-        this.creator = creator;
     }
 
     public Set<Bill> getBills() {
