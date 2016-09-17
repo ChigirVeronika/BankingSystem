@@ -27,8 +27,7 @@ public class Deposit {
     @Future
     @Column(name = "enddate")
     private Date endDate;
-    @Column(name = "moneysum")
-    private Long moneySum;
+
     @Column(name = "percent")
     private Integer percent;
 
@@ -40,9 +39,6 @@ public class Deposit {
     private Set<Bill> bills;
 
     public Deposit(){}
-    public Deposit(Long moneySum){
-        this.moneySum = moneySum;
-    }
 
     @Override
     public String toString() {
@@ -53,7 +49,6 @@ public class Deposit {
                 ", money='" + money + '\'' +
                 ", startDate=" + startDate +
                 ", endDate=" + endDate +
-                ", moneySum=" + moneySum +
                 ", percent=" + percent +
                 ", creator=" + creator +
                 ", bills=" + bills +
@@ -106,14 +101,6 @@ public class Deposit {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
-    }
-
-    public Long getMoneySum() {
-        return moneySum;
-    }
-
-    public void setMoneySum(Long moneySum) {
-        this.moneySum = moneySum;
     }
 
     public Integer getPercent() {

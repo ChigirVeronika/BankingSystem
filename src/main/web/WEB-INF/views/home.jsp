@@ -19,7 +19,7 @@
             <nav>
                 <ul>
                     <li><a href="<c:url value='/list' />">Show User List</a></li>
-                    <li><a href="<c:url value='/create-user' />">Add user</a></li>
+                    <%--<!--<li><a href="<c:url value='/create-user' />">Add user</a></li>-->--%>
                     <li><a href="<c:url value='/create-deposit' />">Add deposit</a></li>
                 </ul>
             </nav>

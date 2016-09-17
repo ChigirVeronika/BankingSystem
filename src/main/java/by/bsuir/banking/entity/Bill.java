@@ -17,20 +17,30 @@ public class Bill {
     private String code;
     @Column(name = "active")
     private String active;
+    @Column(name = "moneysum")
+    private Long moneySum;
 
     @ManyToOne
     @JoinColumn(name = "deposit_id")
     private Deposit deposit;
 
-    public Bill(String name, String number, String code, String active, Deposit deposit) {
+    public Bill(String name, String number, String code, String active, Long moneySum) {
         this.name = name;
         this.number = number;
         this.code = code;
         this.active = active;
-        this.deposit = deposit;
+        this.moneySum = moneySum;
     }
 
     public Bill() {
+    }
+
+    public Long getMoneySum() {
+        return moneySum;
+    }
+
+    public void setMoneySum(Long moneySum) {
+        this.moneySum = moneySum;
     }
 
     public Long getId() {

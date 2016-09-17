@@ -72,20 +72,20 @@ public class DepositController {
         deposit.setCreator(user);
         depositService.saveDeposit(deposit);
 
-        Bill moneyBill = new Bill(
-                "moneyBill " + user.getIdNumber(),
-                String.valueOf(111111111111L) + user.getId().toString(),
-                "code",
-                "passive",
-                deposit);
-        Bill percentBill = new Bill(
-                "percentBill " + user.getIdNumber(),
-                String.valueOf(222222222222L) + user.getId().toString(),
-                "code",
-                "passive",
-                deposit);
-        billService.saveBill(moneyBill);
-        billService.saveBill(percentBill);
+//        Bill moneyBill = new Bill(
+//                "moneyBill " + user.getIdNumber(),
+//                String.valueOf(111111111111L) + user.getId().toString(),
+//                "code",
+//                "passive",
+//                deposit);
+//        Bill percentBill = new Bill(
+//                "percentBill " + user.getIdNumber(),
+//                String.valueOf(222222222222L) + user.getId().toString(),
+//                "code",
+//                "passive",
+//                deposit);
+//        billService.saveBill(moneyBill);
+//        billService.saveBill(percentBill);
 
         //Future<ClassLoaderServiceImpl.Work> future = asyncWorker.work();
         // TODO: 9/11/2016  
