@@ -63,7 +63,6 @@ public class DepositController {
         if (result.hasErrors()) {
             return "choose-deposit";
         }
-
         return "redirect:/home";
     }
 
