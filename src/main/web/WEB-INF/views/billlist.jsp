@@ -11,16 +11,18 @@
 
 <body>
 <div class="generic-container-add">
-    <div class="well">
-        <nav>
-            <ul>
-                <li><a href="<c:url value='/list' />">Show User List</a></li>
-                <li><a href="<c:url value='/home' />">Home</a></li>
-                <li><a href="<c:url value='/deposit-list' />">Deposit List</a></li>
-                <li><a href="<c:url value='/bank' />">Bank Bills</a></li>
-            </ul>
-        </nav>
-    </div>
+    <%--<div class="well">--%>
+        <%--<nav>--%>
+            <%--<ul>--%>
+                <%--<li><a href="<c:url value='/list' />">Show User List</a></li>--%>
+                <%--<li><a href="<c:url value='/home' />">Home</a></li>--%>
+                <%--<li><a href="<c:url value='/deposit-list' />">Deposit List</a></li>--%>
+                <%--<li><a href="<c:url value='/bank' />">Bank Bills</a></li>--%>
+            <%--</ul>--%>
+        <%--</nav>--%>
+    <%--</div>--%>
+
+    <jsp:include page="layout/menu.jsp"/>
     <div>
         <!-- Default panel contents -->
         <div class="panel-heading"><span class="lead">List of Users Deposits</span></div>
@@ -38,13 +40,13 @@
             <tbody>
             <c:forEach items="${bills}" var="bill">
                 <tr>
-                    <td>${bill.creator.getFirstName()} ${bill.creator.getLastName()}</td>
-                    <td>${bill.deposit.getName()}</td>
-                    <td>${bill.deposit.getStartDate()}</td>
-                    <td>${bill.deposit.getEndDate()}</td>
-                    <td>${bill.moneySum}</td>
+                    <td> ${bill.creator.getFirstName()} ${bill.creator.getLastName()} </td>
+                    <td> ${bill.deposit.getName()} </td>
+                    <td> ${bill.deposit.getStartDate()} </td>
+                    <td> ${bill.deposit.getEndDate()} </td>
+                    <td> current: ${bill.moneySum} </td>
                     <c:if test="${bill.deposit.getType()=='Return'}" >
-                        <td><a href="<c:url value='/delete-deposit-${bill.id}' />" class="btn btn-warning custom-width">return</a></td>
+                        <td><a href="<c:url value='/revoke-deposit-${bill.id}' />" class="btn btn-warning custom-width">Revoke</a></td>
                     </c:if>
 
                 </tr>

@@ -9,7 +9,7 @@ public class BankBillsCreator {
                     "0000000000001",
                     "USD",
                     "active",
-                    1000.0000);
+                    1000000.0000);
     public static Bill dollarsCashBox =
             new Bill("CASH-BOX",
                     "0000000000001",
@@ -22,7 +22,7 @@ public class BankBillsCreator {
                     "0000000000002",
                     "RUB",
                     "active",
-                    1000.0000);
+                    1000000.0000);
     public static Bill rubelsCashBox =
             new Bill("CASH-BOX",
                     "0000000000001",

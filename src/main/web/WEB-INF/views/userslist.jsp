@@ -11,16 +11,7 @@
 
 <body>
 <div class="generic-container-add">
-    <div class="well">
-        <nav>
-            <ul>
-                <%--<li><a href="<c:url value='/create-user' />">Add user</a></li>--%>
-                <li><a href="<c:url value='/home' />">Home</a></li>
-                <li><a href="<c:url value='/bill-list' />">Al Users Deposits</a></li>
-                <li><a href="<c:url value='/bank' />">Bank Bills</a></li>
-            </ul>
-        </nav>
-    </div>
+    <jsp:include page="layout/menu.jsp"/>
     <div>
         <!-- Default panel contents -->
         <div class="panel-heading"><span class="lead">List of Users</span></div>
@@ -49,8 +40,7 @@
                     <td>${user.grantedDate}</td>
                     <td>${user.idNumber}</td>
                     <td>${user.email}</td>
-                    <td><a href="<c:url value='/choose-deposit-${user.id}' />" class="btn btn-warning custom-width">add
-                        dep</a></td>
+                    <td><a href="<c:url value='/choose-deposit-${user.id}' />" class="btn btn-warning custom-width">Deposit</a></td>
                 </tr>
             </c:forEach>
             </tbody>

@@ -14,7 +14,7 @@ import java.util.Set;
 public class User {
 
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "creator")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "creator")
     private Set<Bill> bills;
 
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY)

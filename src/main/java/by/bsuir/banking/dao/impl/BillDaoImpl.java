@@ -30,9 +30,9 @@ public class BillDaoImpl  extends AbstractDao<Long, Bill> implements BillDao {
     }
 
     @Override
-    public void deleteByName(String name)    {
+    public void deleteById(Long id)    {
         Criteria criteria = createEntityCriteria();
-        criteria.add(Restrictions.eq("name", name));
+        criteria.add(Restrictions.eq("id", id));
         Bill bill = (Bill)criteria.uniqueResult();
         delete(bill);
     }

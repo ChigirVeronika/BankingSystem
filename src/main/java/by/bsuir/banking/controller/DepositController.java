@@ -21,7 +21,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 @Controller
 @RequestMapping("/")
@@ -61,19 +60,13 @@ public class DepositController {
                                  @RequestParam Double moneySum,
                                  ModelMap model, BindingResult result,
                                  @PathVariable Long userId) throws ServiceException {
-
         model.addAttribute("userId", userId);
         if (result.hasErrors()) {
             return "choose-deposit";
         }
-
-
         int last = deposit.indexOf("&");
-//        System.out.println(deposit.substring(8, last).replace("+"," ").replace("25",""));
-//        System.out.println(moneySum);
         String depositName = deposit.substring(8, last).replace("+", " ").replace("25", "");
         Deposit mainDeposit = depositService.findByName(depositName);
-//        System.out.println(mainDeposit);
         User user = userService.findById(userId);
 
         Bill bill = new Bill("name " + user.getPassportSeries() + user.getPassportNumber(),
@@ -91,7 +84,6 @@ public class DepositController {
                 BankBillsCreator.dollarsCashBox.setMoneySum(BankBillsCreator.dollarsCashBox.getMoneySum() + moneySum);
             }
             break;
-
             case "RUB": {
                 BankBillsCreator.rubelsCashBox.setMoneySum(BankBillsCreator.rubelsCashBox.getMoneySum() + moneySum);
             }
@@ -100,12 +92,22 @@ public class DepositController {
         return "redirect:/home";
     }
 
-    @RequestMapping(value = {"/delete-deposit-{userId}"}, method = RequestMethod.GET)
-    public String deleteUserBill(@PathVariable Long userId) {
-
-//        depositService.deleteDeposit(agreementNumber);
-        //// TODO: 9/18/2016 это ид депозита, походу так будем удалять 
-        return "redirect:/home";
+    @RequestMapping(value = {"/revoke-deposit-{billId}"}, method = RequestMethod.GET)
+    public String revokeUserDeposit(@PathVariable Long billId) {
+        Bill bill = billService.findById(billId);
+        Double allBillMoney = bill.getMoneySum();
+        switch (bill.getDeposit().getMoney()) {
+            case "USD": {
+                BankBillsCreator.dollarsBankBill.setMoneySum(BankBillsCreator.dollarsBankBill.getMoneySum()-(double)allBillMoney);
+            }
+            break;
+            case "RUB": {
+                BankBillsCreator.rubelsBankBill.setMoneySum(BankBillsCreator.rubelsBankBill.getMoneySum()-(double)allBillMoney);
+            }
+            break;
+        }
+        billService.deleteBill(bill.getId());
+        return "home";
     }
 
     @RequestMapping(value = {"/deposit-list"}, method = RequestMethod.GET)

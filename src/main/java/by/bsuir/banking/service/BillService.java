@@ -9,7 +9,7 @@ public interface BillService {
     Bill findById(Long id);
     void saveBill(Bill bill);
     void updateBill(Bill bill);
-    void deleteBill(Long depositId);
+    void deleteBill(Long id);
     List<Bill> findAllBillsOfDeposit(Long depositId);
     List<Bill> findAllBills();
 }

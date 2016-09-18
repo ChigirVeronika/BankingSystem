@@ -21,10 +21,7 @@
 <body>
 
 <div class="generic-container">
-    <div class="well">
-        <a href="<c:url value='/list' />">User list</a>
-        <a href="<c:url value='/home' />">Home</a>
-    </div>
+    <jsp:include page="layout/menu.jsp"/>
     <div class="well lead">Deposit</div>
     <form:form method="POST" onsubmit="return registrationFormValidation();"  modelAttribute="deposit" class="form-horizontal">
         <form:input type="hidden" path="id" id="id" />

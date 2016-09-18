@@ -22,13 +22,7 @@
 <body>
 
 <div class="generic-container">
-    <div class="well">
-        <li><a href="<c:url value='/list' />">Show User List</a></li>
-        <li><a href="<c:url value='/home' />">Home</a></li>
-        <li><a href="<c:url value='/deposit-list' />">Deposit List</a></li>
-        <li><a href="<c:url value='/bill-list' />">Al Users Deposits</a></li>
-        <li><a href="<c:url value='/bank' />">Bank Bills</a></li>
-    </div>
+    <jsp:include page="layout/menu.jsp"/>
     <div class="well lead">Deposit</div>
     <form action="/choose-deposit-${userId}" method="post" class="nm-block nm-add-at-line">
         <div class="row">

@@ -15,18 +15,19 @@
         <div>
             ${success}
         </div>
-        <div class="well">
-            <nav>
-                <ul>
-                    <li><a href="<c:url value='/list' />">User List</a></li>
-                    <li><a href="<c:url value='/deposit-list' />">Deposit List</a></li>
-                    <li><a href="<c:url value='/bill-list' />">Al Users Deposits</a></li>
-                    <li><a href="<c:url value='/bank' />">Bank Bills</a></li>
-                    <%--<li><a href="<c:url value='/create-user' />">Add user</a></li>--%>
-                    <%--<li><a href="<c:url value='/create-deposit' />">Add deposit</a></li>--%>
-                </ul>
-            </nav>
-        </div>
+        <%--<div class="well">--%>
+            <%--<nav>--%>
+                <%--<ul>--%>
+                    <%--<li><a href="<c:url value='/list' />">User List</a></li>--%>
+                    <%--<li><a href="<c:url value='/deposit-list' />">Deposit List</a></li>--%>
+                    <%--<li><a href="<c:url value='/bill-list' />">All Users Deposits</a></li>--%>
+                    <%--<li><a href="<c:url value='/bank' />">Bank Bills</a></li>--%>
+                    <%--&lt;%&ndash;<li><a href="<c:url value='/create-user' />">Add user</a></li>&ndash;%&gt;--%>
+                    <%--&lt;%&ndash;<li><a href="<c:url value='/create-deposit' />">Add deposit</a></li>&ndash;%&gt;--%>
+                <%--</ul>--%>
+            <%--</nav>--%>
+        <%--</div>--%>
+        <jsp:include page="layout/menu.jsp"/>
     </div>
 
 </div>

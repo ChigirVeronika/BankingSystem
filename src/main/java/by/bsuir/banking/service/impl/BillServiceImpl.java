@@ -46,12 +46,9 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public void deleteBill(Long depositId) {
-        Deposit deposit = depositDao.findById(depositId);
-        Set<Bill> bills= deposit.getBills();
-        for (Bill bill:bills) {
-            billDao.deleteByName(bill.getName());
-        }
+    public void deleteBill(Long id) {
+        billDao.deleteById(id);
+
     }
 
     @Override

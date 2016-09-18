@@ -34,7 +34,7 @@ public class Deposit {
     @Column(name = "percent")
     private Integer percent;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "deposit")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "deposit")
     private Set<Bill> bills;
 
     public Deposit(){}
