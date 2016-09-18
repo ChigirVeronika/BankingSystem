@@ -1,6 +1,8 @@
 body, #mainWrapper {
 	height: 100%;
 	background-color:rgb(245, 245, 245);
+    bordercolor: #433f80;
+    color: #433f80;
 }
 
 body, .form-control{

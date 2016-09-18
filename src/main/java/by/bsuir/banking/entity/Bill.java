@@ -18,7 +18,7 @@ public class Bill {
     @Column(name = "active")
     private String active;
     @Column(name = "moneysum")
-    private Long moneySum;
+    private Double moneySum;
 
     @ManyToOne
     @JoinColumn(name = "deposit_id")
@@ -26,9 +26,9 @@ public class Bill {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private User user;
+    private User creator;
 
-    public Bill(String name, String number, String code, String active, Long moneySum) {
+    public Bill(String name, String number, String code, String active, Double moneySum) {
         this.name = name;
         this.number = number;
         this.code = code;
@@ -36,22 +36,32 @@ public class Bill {
         this.moneySum = moneySum;
     }
 
+    public Bill(String name, String number, String code, String active, Double moneySum, Deposit deposit, User user) {
+        this.name = name;
+        this.number = number;
+        this.code = code;
+        this.active = active;
+        this.moneySum = moneySum;
+        this.deposit = deposit;
+        this.creator = user;
+    }
+
     public Bill() {
     }
 
-    public User getUser() {
-        return user;
+    public User getCreator() {
+        return creator;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setCreator(User creator) {
+        this.creator = creator;
     }
 
-    public Long getMoneySum() {
+    public Double getMoneySum() {
         return moneySum;
     }
 
-    public void setMoneySum(Long moneySum) {
+    public void setMoneySum(Double moneySum) {
         this.moneySum = moneySum;
     }
 

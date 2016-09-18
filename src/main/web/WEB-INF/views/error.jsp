@@ -4,7 +4,7 @@
 
 <html>
 <head>
-    <title>Error</title>
+    <title>BankingSystem</title>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"/>
     <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"/>
@@ -12,17 +12,17 @@
 <body>
 <div class="generic-container">
     <div class="well">
-        Error occurs!
-    </div>
-    <div class="well">
         <nav>
             <ul>
                 <li><a href="<c:url value='/list' />">Show User List</a></li>
-                <li><a href="<c:url value='/create-user' />">Add user</a></li>
                 <li><a href="<c:url value='/home' />">Home</a></li>
+                <li><a href="<c:url value='/deposit-list' />">Deposit List</a></li>
+                <li><a href="<c:url value='/bill-list' />">Al Users Deposits</a></li>
+                <li><a href="<c:url value='/bank' />">Bank Bills</a></li>
             </ul>
         </nav>
     </div>
+
 </div>
 </body>
 </html>

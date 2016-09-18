@@ -18,26 +18,32 @@ public class DepositServiceImpl implements DepositService{
 
     @Override
     public Deposit findById(Long id) {
-        return null;
+        return depositDao.findById(id);
+
+    }
+
+    @Override
+    public Deposit findByName(String name) {
+        return  depositDao.findByName(name);
     }
 
     @Override
     public void saveDeposit(Deposit deposit) {
-
+        depositDao.save(deposit);
     }
 
     @Override
     public void updateDeposit(Deposit deposit) {
-
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public void deleteDeposit(Long agreementNumber) {
-
+        depositDao.deleteByAgreementNumber(agreementNumber);
     }
 
     @Override
-    public List<Deposit> findAllDepositsOfUser(Long userId) {
-        return null;
+    public List<Deposit> findAllDeposits() {
+        return depositDao.findAllDeposits();
     }
 }

@@ -25,6 +25,11 @@ public class BillDaoImpl  extends AbstractDao<Long, Bill> implements BillDao {
     }
 
     @Override
+    public void update(Bill bill) {
+        updateEntity(bill);
+    }
+
+    @Override
     public void deleteByName(String name)    {
         Criteria criteria = createEntityCriteria();
         criteria.add(Restrictions.eq("name", name));
@@ -36,7 +41,15 @@ public class BillDaoImpl  extends AbstractDao<Long, Bill> implements BillDao {
     public List<Bill> findAllDepositBills(Long depositId) {
         Criteria criteria = createEntityCriteria();
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-        criteria.add(Restrictions.eq("deposit_id", depositId));
+        criteria.add(Restrictions.eq("user_id", depositId));
+        List<Bill> bills = (List<Bill>)criteria.list();
+        return bills;
+    }
+
+    @Override
+    public List<Bill> findAllBills() {
+        Criteria criteria = createEntityCriteria();
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
         List<Bill> bills = (List<Bill>)criteria.list();
         return bills;
     }

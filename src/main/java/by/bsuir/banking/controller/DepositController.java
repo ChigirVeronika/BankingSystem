@@ -7,7 +7,7 @@ import by.bsuir.banking.service.BillService;
 import by.bsuir.banking.service.DepositService;
 import by.bsuir.banking.service.UserService;
 import by.bsuir.banking.service.exception.ServiceException;
-import org.hibernate.boot.registry.classloading.internal.ClassLoaderServiceImpl;
+import by.bsuir.banking.util.BankBillsCreator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.MessageSource;
@@ -15,17 +15,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.concurrent.Future;
+import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequestMapping("/")
@@ -42,6 +38,8 @@ public class DepositController {
     @Autowired
     MessageSource messageSource;
 
+    private final static Double EMPTY_CASH = 0.0000;
+
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -53,23 +51,104 @@ public class DepositController {
     public String showChooseDepositPage(ModelMap model, @PathVariable Long userId) {
         model.addAttribute("userId", userId);
         model.addAttribute("edit", false);
+        List<Deposit> deposits = depositService.findAllDeposits();
+        model.addAttribute("deposits", deposits);
         return "choose-deposit";
     }
 
     @RequestMapping(value = {"/choose-deposit-{userId}"}, method = RequestMethod.POST)
-    public String saveUserBill(ModelMap model, BindingResult result,
-                              @PathVariable Long userId) {
+    public String saveUserChoice(@RequestBody String deposit,
+                                 @RequestParam Double moneySum,
+                                 ModelMap model, BindingResult result,
+                                 @PathVariable Long userId) throws ServiceException {
+
         model.addAttribute("userId", userId);
         if (result.hasErrors()) {
             return "choose-deposit";
         }
+
+
+        int last = deposit.indexOf("&");
+//        System.out.println(deposit.substring(8, last).replace("+"," ").replace("25",""));
+//        System.out.println(moneySum);
+        String depositName = deposit.substring(8, last).replace("+", " ").replace("25", "");
+        Deposit mainDeposit = depositService.findByName(depositName);
+//        System.out.println(mainDeposit);
+        User user = userService.findById(userId);
+
+        Bill bill = new Bill("name " + user.getPassportSeries() + user.getPassportNumber(),
+                "number",
+                "code",
+                "active",
+                moneySum,
+                mainDeposit,
+                user);
+        billService.saveBill(bill);
+
+        final String DEPOSIT_MONEY_TYPE = mainDeposit.getMoney();
+        switch (DEPOSIT_MONEY_TYPE) {
+            case "USD": {
+                BankBillsCreator.dollarsCashBox.setMoneySum(BankBillsCreator.dollarsCashBox.getMoneySum() + moneySum);
+            }
+            break;
+
+            case "RUB": {
+                BankBillsCreator.rubelsCashBox.setMoneySum(BankBillsCreator.rubelsCashBox.getMoneySum() + moneySum);
+            }
+            break;
+        }
         return "redirect:/home";
     }
 
-    @RequestMapping(value = {"/delete-deposit-{agreementNumber}"}, method = RequestMethod.GET)
-    public String deleteUserBill(@PathVariable Long agreementNumber) {
-        depositService.deleteDeposit(agreementNumber);
+    @RequestMapping(value = {"/delete-deposit-{userId}"}, method = RequestMethod.GET)
+    public String deleteUserBill(@PathVariable Long userId) {
+
+//        depositService.deleteDeposit(agreementNumber);
+        //// TODO: 9/18/2016 это ид депозита, походу так будем удалять 
         return "redirect:/home";
     }
 
+    @RequestMapping(value = {"/deposit-list"}, method = RequestMethod.GET)
+    public String showFullList(ModelMap model) {
+        List<Deposit> deposits = depositService.findAllDeposits();
+        model.addAttribute("deposits", deposits);
+        return "depositlist";
+    }
+
+    @RequestMapping(value = {"/bill-list"}, method = RequestMethod.GET)
+    public String showUserDepositList(ModelMap model) {
+        List<Bill> bills = billService.findAllBills();
+        model.addAttribute("bills", bills);
+        return "billlist";
+    }
+
+    @RequestMapping(value = {"/bank"}, method = RequestMethod.GET)
+    public String showBank(ModelMap model) {
+        List<Bill> bills = new ArrayList<>();
+        bills.add(BankBillsCreator.dollarsBankBill);
+        bills.add(BankBillsCreator.dollarsCashBox);
+        bills.add(BankBillsCreator.rubelsBankBill);
+        bills.add(BankBillsCreator.rubelsCashBox);
+        model.addAttribute("bills", bills);
+        return "bank";
+    }
+
+    @RequestMapping(value = {"/end-bank-day"}, method = RequestMethod.GET)
+    public String endBankDay(ModelMap model) {
+        BankBillsCreator.dollarsBankBill.setMoneySum(
+                BankBillsCreator.dollarsBankBill.getMoneySum() + BankBillsCreator.dollarsCashBox.getMoneySum());
+        BankBillsCreator.dollarsCashBox.setMoneySum(EMPTY_CASH);
+        BankBillsCreator.rubelsBankBill.setMoneySum(
+                BankBillsCreator.rubelsBankBill.getMoneySum() + BankBillsCreator.rubelsCashBox.getMoneySum());
+        BankBillsCreator.rubelsCashBox.setMoneySum(EMPTY_CASH);
+        List<Bill> userBills = billService.findAllBills();
+        for (Bill bill : userBills) {
+            Integer p = bill.getDeposit().getPercent();
+            Double m = bill.getMoneySum();
+            Double percentToAdd = (double)p / (double) 100 * m / (double) 365;
+            bill.setMoneySum(bill.getMoneySum() + percentToAdd);
+            billService.updateBill(bill);
+        }
+        return "home";
+    }
 }

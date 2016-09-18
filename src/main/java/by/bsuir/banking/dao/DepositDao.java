@@ -6,8 +6,9 @@ import java.util.List;
 
 public interface DepositDao {
     Deposit findById(Long id);
+    Deposit findByName(String name);
     Deposit findByUserId(Long userId);
     void save(Deposit deposit);
     void deleteByAgreementNumber(Long agreementNumber);
-    List<Deposit> findAllUserDeposits(Long userId);
+    List<Deposit> findAllDeposits();
 }

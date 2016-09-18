@@ -15,7 +15,15 @@ import java.util.List;
 public class DepositDaoImpl  extends AbstractDao<Long, Deposit> implements DepositDao {
     @Override
     public Deposit findById(Long id) {
-        Deposit deposit = findById(id);
+        Deposit deposit = getByKey(id);
+        return deposit;
+    }
+
+    @Override
+    public Deposit findByName(String name) {
+        Criteria criteria = createEntityCriteria();
+        criteria.add(Restrictions.eq("name", name));
+        Deposit deposit = (Deposit) criteria.uniqueResult();
         return deposit;
     }
 
@@ -40,11 +48,11 @@ public class DepositDaoImpl  extends AbstractDao<Long, Deposit> implements Depos
     }
 
     @Override
-    public List<Deposit> findAllUserDeposits(Long userId) {
+    public List<Deposit> findAllDeposits() {
 
-        Criteria criteria = createEntityCriteria();
+//        Criteria criteria = createEntityCriteria().addOrder(Order.asc("firstName"));
+        Criteria criteria = createEntityCriteria().addOrder(Order.asc("name"));
         criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
-        criteria.add(Restrictions.eq("user_id", userId));
         List<Deposit> deposits = (List<Deposit>)criteria.list();
         return deposits;
     }

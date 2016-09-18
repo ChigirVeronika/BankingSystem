@@ -11,4 +11,5 @@ public interface BillService {
     void updateBill(Bill bill);
     void deleteBill(Long depositId);
     List<Bill> findAllBillsOfDeposit(Long depositId);
+    List<Bill> findAllBills();
 }

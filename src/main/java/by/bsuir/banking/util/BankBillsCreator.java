@@ -5,9 +5,30 @@ import by.bsuir.banking.entity.Deposit;
 
 public class BankBillsCreator {
     public static Bill dollarsBankBill =
-            new Bill("dollarsBankBill","0000000000001","0001","active", 10000L);
+            new Bill("BILL",
+                    "0000000000001",
+                    "USD",
+                    "active",
+                    1000.0000);
+    public static Bill dollarsCashBox =
+            new Bill("CASH-BOX",
+                    "0000000000001",
+                    "USD",
+                    "active",
+                    0.0000);
+    /////////////////////
     public static Bill rubelsBankBill =
-            new Bill("rubelsBankBill","0000000000002","0002","passive", 10000L);
+            new Bill("BILL",
+                    "0000000000002",
+                    "RUB",
+                    "active",
+                    1000.0000);
+    public static Bill rubelsCashBox =
+            new Bill("CASH-BOX",
+                    "0000000000001",
+                    "RUB",
+                    "active",
+                    0.0000);
 
 
 }

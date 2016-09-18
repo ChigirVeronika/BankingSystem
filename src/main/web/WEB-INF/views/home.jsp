@@ -5,7 +5,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-    <title>Home</title>
+    <title>BankingSystem</title>
     <link href="<c:url value='/static/css/bootstrap.css' />" rel="stylesheet"/>
     <link href="<c:url value='/static/css/app.css' />" rel="stylesheet"/>
 </head>
@@ -18,9 +18,12 @@
         <div class="well">
             <nav>
                 <ul>
-                    <li><a href="<c:url value='/list' />">Show User List</a></li>
-                    <%--<!--<li><a href="<c:url value='/create-user' />">Add user</a></li>-->--%>
-                    <li><a href="<c:url value='/create-deposit' />">Add deposit</a></li>
+                    <li><a href="<c:url value='/list' />">User List</a></li>
+                    <li><a href="<c:url value='/deposit-list' />">Deposit List</a></li>
+                    <li><a href="<c:url value='/bill-list' />">Al Users Deposits</a></li>
+                    <li><a href="<c:url value='/bank' />">Bank Bills</a></li>
+                    <%--<li><a href="<c:url value='/create-user' />">Add user</a></li>--%>
+                    <%--<li><a href="<c:url value='/create-deposit' />">Add deposit</a></li>--%>
                 </ul>
             </nav>
         </div>
