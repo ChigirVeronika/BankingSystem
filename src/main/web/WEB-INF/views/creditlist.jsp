@@ -13,7 +13,7 @@
 <div class="generic-container-add">
     <jsp:include page="layout/menu.jsp"/>
     <div>
-        <div class="panel-heading"><span class="lead">List of Deposits</span></div>
+        <div class="panel-heading"><span class="lead">List of Credits</span></div>
         <table>
             <thead>
             <tr>
@@ -24,7 +24,7 @@
             </thead>
             <tbody>
             <c:forEach items="${deposits}" var="deposit">
-                <c:if test="${deposit.agreementNumber == 1}">
+                <c:if test="${deposit.agreementNumber == 2}">
                     <tr>
                         <td>${deposit.name}</td>
                             <%--<td><a href="<c:url value='/choose-deposit-${user.id}' />" class="btn btn-warning custom-width">add dep</a></td>--%>
@@ -39,3 +39,4 @@
 </div>
 </body>
 </html>
+

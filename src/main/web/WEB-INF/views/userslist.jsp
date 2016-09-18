@@ -26,7 +26,8 @@
                 <th>Granted Date</th>
                 <th>Id number</th>
                 <th>Email</th>
-                <th width="300"></th>
+                <th width="200"></th>
+                <th width="200"></th>
             </tr>
             </thead>
             <tbody>
@@ -41,6 +42,7 @@
                     <td>${user.idNumber}</td>
                     <td>${user.email}</td>
                     <td><a href="<c:url value='/choose-deposit-${user.id}' />" class="btn btn-warning custom-width">Deposit</a></td>
+                    <td><a href="<c:url value='/choose-credit-${user.id}' />" class="btn btn-warning custom-width">Credit</a></td>
                 </tr>
             </c:forEach>
             </tbody>

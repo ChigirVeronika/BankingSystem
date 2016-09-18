@@ -223,7 +223,6 @@ public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {
             statement.setDouble(24, user.getMonthIncome());
 
             int count = statement.executeUpdate();
-            // TODO: 9/6/2016 check saving
         } catch (ConnectionPoolException | SQLException e) {
             throw new DaoException("Exception");
         } finally {

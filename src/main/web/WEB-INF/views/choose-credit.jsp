@@ -23,15 +23,15 @@
 
 <div class="generic-container">
     <jsp:include page="layout/menu.jsp"/>
-    <div class="well lead">Deposit</div>
-    <form action="/choose-deposit-${userId}" method="post" class="nm-block nm-add-at-line">
+    <div class="well lead">Credit</div>
+    <form action="/choose-credit-${userId}" method="post" class="nm-block nm-add-at-line">
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable">Deposit Name</label>
+                <label class="col-md-3 control-lable">Credit Name</label>
                 <div class="col-md-7">
                     <select id="deposit" name="deposit">
                         <c:forEach var="deposit" items="${deposits}">
-                            <c:if test="${deposit.agreementNumber == 1}">
+                            <c:if test="${deposit.agreementNumber == 2}">
                                 <option name="deposit" value="${deposit.name}">
                                     <c:out value="${deposit.name}"/>
                                 </option>
@@ -44,7 +44,7 @@
 
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable">Deposit money</label>
+                <label class="col-md-3 control-lable">Credit money</label>
                 <div class="col-md-7">
                     <input type="number" min="1" name="moneySum" class="form-control input-sm" required>
                 </div>
@@ -69,4 +69,5 @@
 </div>
 </body>
 </html>
+
 

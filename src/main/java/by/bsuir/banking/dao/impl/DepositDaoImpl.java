@@ -28,9 +28,8 @@ public class DepositDaoImpl  extends AbstractDao<Long, Deposit> implements Depos
     }
 
     @Override
-    public Deposit findByUserId(Long userId) {
-        // TODO: 9/11/2016 возможно придется переделать в поиск конктетного депозита по имени
-        return null;
+    public Deposit findByUserId(Long userId) throws UnsupportedOperationException{
+        throw new UnsupportedOperationException();
     }
 
     @Override

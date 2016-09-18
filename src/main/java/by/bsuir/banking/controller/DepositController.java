@@ -37,8 +37,6 @@ public class DepositController {
     @Autowired
     MessageSource messageSource;
 
-    private final static Double EMPTY_CASH = 0.0000;
-
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -124,33 +122,4 @@ public class DepositController {
         return "billlist";
     }
 
-    @RequestMapping(value = {"/bank"}, method = RequestMethod.GET)
-    public String showBank(ModelMap model) {
-        List<Bill> bills = new ArrayList<>();
-        bills.add(BankBillsCreator.dollarsBankBill);
-        bills.add(BankBillsCreator.dollarsCashBox);
-        bills.add(BankBillsCreator.rubelsBankBill);
-        bills.add(BankBillsCreator.rubelsCashBox);
-        model.addAttribute("bills", bills);
-        return "bank";
-    }
-
-    @RequestMapping(value = {"/end-bank-day"}, method = RequestMethod.GET)
-    public String endBankDay(ModelMap model) {
-        BankBillsCreator.dollarsBankBill.setMoneySum(
-                BankBillsCreator.dollarsBankBill.getMoneySum() + BankBillsCreator.dollarsCashBox.getMoneySum());
-        BankBillsCreator.dollarsCashBox.setMoneySum(EMPTY_CASH);
-        BankBillsCreator.rubelsBankBill.setMoneySum(
-                BankBillsCreator.rubelsBankBill.getMoneySum() + BankBillsCreator.rubelsCashBox.getMoneySum());
-        BankBillsCreator.rubelsCashBox.setMoneySum(EMPTY_CASH);
-        List<Bill> userBills = billService.findAllBills();
-        for (Bill bill : userBills) {
-            Integer p = bill.getDeposit().getPercent();
-            Double m = bill.getMoneySum();
-            Double percentToAdd = (double)p / (double) 100 * m / (double) 365;
-            bill.setMoneySum(bill.getMoneySum() + percentToAdd);
-            billService.updateBill(bill);
-        }
-        return "home";
-    }
 }

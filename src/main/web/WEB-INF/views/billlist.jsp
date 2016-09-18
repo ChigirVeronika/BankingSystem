@@ -11,20 +11,9 @@
 
 <body>
 <div class="generic-container-add">
-    <%--<div class="well">--%>
-        <%--<nav>--%>
-            <%--<ul>--%>
-                <%--<li><a href="<c:url value='/list' />">Show User List</a></li>--%>
-                <%--<li><a href="<c:url value='/home' />">Home</a></li>--%>
-                <%--<li><a href="<c:url value='/deposit-list' />">Deposit List</a></li>--%>
-                <%--<li><a href="<c:url value='/bank' />">Bank Bills</a></li>--%>
-            <%--</ul>--%>
-        <%--</nav>--%>
-    <%--</div>--%>
 
     <jsp:include page="layout/menu.jsp"/>
     <div>
-        <!-- Default panel contents -->
         <div class="panel-heading"><span class="lead">List of Users Deposits</span></div>
         <table>
             <thead>
@@ -39,6 +28,7 @@
             </thead>
             <tbody>
             <c:forEach items="${bills}" var="bill">
+                <c:if test="${bill.deposit.getAgreementNumber() == 1}">
                 <tr>
                     <td> ${bill.creator.getFirstName()} ${bill.creator.getLastName()} </td>
                     <td> ${bill.deposit.getName()} </td>
@@ -50,6 +40,7 @@
                     </c:if>
 
                 </tr>
+                </c:if>
             </c:forEach>
             </tbody>
         </table>

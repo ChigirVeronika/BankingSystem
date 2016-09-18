@@ -35,14 +35,7 @@ public class BillServiceImpl implements BillService {
 
     @Override
     public void updateBill(Bill bill) {
-//        Bill entity = billDao.findById(bill.getId());
-//        if(entity!=null){
-//            entity.setMoneySum(bill.getMoneySum());
-//             TODO: 9/18/2016
-//        }
-//        billDao.update(entity);
         billDao.update(bill);
-
     }
 
     @Override
