@@ -11,27 +11,67 @@
 
 <body>
 <div class="generic-container-add">
-    <jsp:include page="layout/menu.jsp"/>
+    <jsp:include page="layout/atm-menu.jsp"/>
     <div>
-        <div class="panel-heading"><span class="lead">List of Bank Bills</span></div>
+        <div class="panel-heading"><span class="lead">Current Bill</span></div>
         <table>
             <thead>
             <tr>
-                <th>Bank bill type</th>
-                <th>Currency type</th>
+                <th>User</th>
+                <%--<th>Deposit type</th>--%>
                 <th>Money amount</th>
             </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>${bill.name}</td>
-                    <td>${bill.code}</td>
-                    <td>${bill.moneySum}</td>
-                </tr>
+            <tr>
+                <td>${bill.creator.getFirstName()} ${bill.creator.getLastName()}</td>
+                <%--<td>${bill.deposit.getName()}</td>--%>
+                <td>${bill.moneySum}</td>
+            </tr>
             </tbody>
         </table>
 
-        <a href="<c:url value='/' />" class="btn btn-danger custom-width">End Day</a>
+        <hr/>
+
+        <form action="/atm-get-money-${bill.id}" method="post" class="nm-block nm-add-at-line">
+
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label class="col-md-3 control-lable">Money to get</label>
+                    <div class="col-md-7">
+                        <input type="number" min="10" max="500" name="money" class="form-control input-sm" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-actions floatRight">
+                    <input type="submit" value="OK" class="btn btn-primary btn-sm"/>
+                </div>
+            </div>
+        </form>
+
+        <hr/>
+
+        <div class="panel-heading"><span class="lead">Current Receipt</span></div>
+        <table>
+            <thead>
+            <tr>
+                <th>User</th>
+                <%--<th>Deposit type</th>--%>
+                <th>Money amount</th>
+                <th>Got money</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>${bill.creator.getFirstName()} ${bill.creator.getLastName()}</td>
+                <%--<td>${bill.deposit.getName()}</td>--%>
+                <td>${bill.moneySum}</td>
+                <td>${gotmoney}</td>
+            </tr>
+            </tbody>
+        </table>
     </div>
 
 </div>

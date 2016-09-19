@@ -50,13 +50,32 @@ public class AtmController {
                                  ModelMap model, BindingResult result,
                                  @PathVariable Long userId) throws ServiceException {
         model.addAttribute("userId", userId);
+        model.addAttribute("code", code);
         if (result.hasErrors()) {
             return "choose-credit";
         }
         Bill bill = billService.findByCode(String.valueOf(code));
         model.addAttribute("bill", bill);
+        model.addAttribute("gotmoney", 0.0);
         return "atm-inside";
     }
 
+    @RequestMapping(value = {"/atm-get-money-{id}"}, method = RequestMethod.POST)
+    public String getMoney(@RequestBody String deposit,
+                           @RequestParam Integer money,
+                           ModelMap model, BindingResult result,
+                           @PathVariable Long id) throws ServiceException {
+        model.addAttribute("id", id);
+        if (result.hasErrors()) {
+            return "choose-credit";
+        }
+        Bill bill = billService.findById(id);
+        bill.setMoneySum(bill.getMoneySum() - (double)money);
+        billService.updateBill(bill);
+        model.addAttribute("bill", bill);
+        model.addAttribute("gotmoney", (double)money);
+
+        return "atm-inside";
+    }
 
 }

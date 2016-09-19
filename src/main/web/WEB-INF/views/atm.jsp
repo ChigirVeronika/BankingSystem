@@ -28,17 +28,6 @@
 
         <div class="row">
             <div class="form-group col-md-12">
-                <label class="col-md-3 control-lable">Credit Name</label>
-                <div class="col-md-7">
-                    <select id="deposit" name="deposit" >
-
-                    </select>
-                </div>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="form-group col-md-12">
                 <label class="col-md-3 control-lable">Card number</label>
                 <div class="col-md-7">
                     <input type="number" min="1000" max="9999" name="code" class="form-control input-sm" required>
