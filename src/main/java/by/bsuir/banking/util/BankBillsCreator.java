@@ -15,7 +15,7 @@ public class BankBillsCreator {
                     "0000000000001",
                     "USD",
                     "active",
-                    0.0000);
+                    1000000.0000);
     /////////////////////
     public static Bill rubelsBankBill =
             new Bill("BILL",
@@ -28,7 +28,7 @@ public class BankBillsCreator {
                     "0000000000001",
                     "RUB",
                     "active",
-                    0.0000);
+                    1000000.0000);
 
 
 }

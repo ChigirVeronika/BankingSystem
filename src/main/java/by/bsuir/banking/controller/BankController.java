@@ -45,6 +45,11 @@ public class BankController {
     }
 
     @RequestMapping(value = {"/end-bank-day"}, method = RequestMethod.GET)
+    public String startBankDay(ModelMap model) {
+        return "home";
+        // TODO: 9/19/2016 снова денег в кассу положить 
+    }
+    @RequestMapping(value = {"/end-bank-day"}, method = RequestMethod.GET)
     public String endBankDay(ModelMap model) {
         BankBillsCreator.dollarsBankBill.setMoneySum(
                 BankBillsCreator.dollarsBankBill.getMoneySum() + BankBillsCreator.dollarsCashBox.getMoneySum());

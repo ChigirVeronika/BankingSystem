@@ -62,8 +62,7 @@ public class CreditController {
     }
 
     @RequestMapping(value = {"/bill-list2"}, method = RequestMethod.GET)
-    public String showUserDepositList(ModelMap model) {
-        //// TODO: 9/18/2016  ну не все же счета, в самом деле!
+    public String showUserDepositList2(ModelMap model) {
         List<Bill> bills = billService.findAllBills();
         model.addAttribute("bills", bills);
         return "billlist2";
@@ -82,33 +81,37 @@ public class CreditController {
         String depositName = deposit.substring(8, last).replace("+", " ").replace("25", "");
         Deposit mainCredit = depositService.findByName(depositName);
         User user = userService.findById(userId);
-        // TODO: 9/18/2016
-//        Bill bill = new Bill("name " + user.getPassportSeries() + user.getPassportNumber(),
-//                "number",
-//                "code",
-//                "active",
-//                moneySum,
-//                mainDeposit,
-//                user);
-//        billService.saveBill(bill);
-//
-//        final String DEPOSIT_MONEY_TYPE = mainDeposit.getMoney();
-//        switch (DEPOSIT_MONEY_TYPE) {
-//            case "USD": {
-//                BankBillsCreator.dollarsCashBox.setMoneySum(BankBillsCreator.dollarsCashBox.getMoneySum() + moneySum);
-//            }
-//            break;
-//            case "RUB": {
-//                BankBillsCreator.rubelsCashBox.setMoneySum(BankBillsCreator.rubelsCashBox.getMoneySum() + moneySum);
-//            }
-//            break;
-//        }
+
+        // TODO: 9/19/2016 change moneysum with formula 
+        
+        Bill bill = new Bill("name " + user.getPassportSeries() + user.getPassportNumber(),
+                "number",
+                "code",
+                "active",
+                moneySum,
+                mainCredit,
+                user);
+        billService.saveBill(bill);
+
+        final String DEPOSIT_MONEY_TYPE = mainCredit.getMoney();
+        switch (DEPOSIT_MONEY_TYPE) {
+            case "USD": {
+                BankBillsCreator.dollarsCashBox.setMoneySum(BankBillsCreator.dollarsCashBox.getMoneySum() - moneySum);
+            }
+            break;
+            case "RUB": {
+                BankBillsCreator.rubelsCashBox.setMoneySum(BankBillsCreator.rubelsCashBox.getMoneySum() - moneySum);
+            }
+            break;
+        }
         return "redirect:/home";
     }
 
     @RequestMapping(value = {"/close-credit-{billId}"}, method = RequestMethod.GET)
     public String closeUserCredit(@PathVariable Long billId) {
         // TODO: 9/18/2016
+        // TODO: 9/19/2016 не хоум возвращать, а страничку где положить деньги за день - там готовая сумма и сабмит 
+        // TODO: 9/19/2016 а от сабмита в кассу 
         return "home";
     }
 }
