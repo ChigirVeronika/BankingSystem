@@ -20,6 +20,15 @@ public class BillDaoImpl  extends AbstractDao<Long, Bill> implements BillDao {
     }
 
     @Override
+    public Bill findByCode(String code) {
+        Criteria criteria = createEntityCriteria();
+        criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+        criteria.add(Restrictions.eq("code", code));
+        Bill bill = (Bill) criteria.uniqueResult();
+        return bill;
+    }
+
+    @Override
     public void save(Bill bill) {
         persist(bill);
     }

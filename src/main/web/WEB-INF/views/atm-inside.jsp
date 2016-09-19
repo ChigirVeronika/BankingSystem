@@ -23,20 +23,19 @@
             </tr>
             </thead>
             <tbody>
-            <c:forEach items="${bills}" var="bill">
                 <tr>
                     <td>${bill.name}</td>
                     <td>${bill.code}</td>
                     <td>${bill.moneySum}</td>
                 </tr>
-            </c:forEach>
             </tbody>
         </table>
 
-        <a href="<c:url value='/end-bank-day' />" class="btn btn-danger custom-width">End Day</a>
+        <a href="<c:url value='/' />" class="btn btn-danger custom-width">End Day</a>
     </div>
 
 </div>
 </body>
 </html>
+
 

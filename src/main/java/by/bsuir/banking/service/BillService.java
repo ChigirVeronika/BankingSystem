@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface BillService {
     Bill findById(Long id);
+    Bill findByCode(String code);
     void saveBill(Bill bill);
     void updateBill(Bill bill);
     void deleteBill(Long id);

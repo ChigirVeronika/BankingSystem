@@ -29,6 +29,11 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
+    public Bill findByCode(String code) {
+        return billDao.findByCode(code);
+    }
+
+    @Override
     public void saveBill(Bill bill) {
         billDao.save(bill);
     }
