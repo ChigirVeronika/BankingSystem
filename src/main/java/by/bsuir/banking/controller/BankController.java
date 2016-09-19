@@ -44,11 +44,13 @@ public class BankController {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, false));
     }
 
-    @RequestMapping(value = {"/end-bank-day"}, method = RequestMethod.GET)
-    public String startBankDay(ModelMap model) {
-        return "home";
-        // TODO: 9/19/2016 снова денег в кассу положить 
-    }
+    //    @RequestMapping(value = {"/start-bank-day"}, method = RequestMethod.GET)
+//    public String startBankDay(ModelMap model) {
+//
+//        BankBillsCreator.dollarsCashBox.setMoneySum(1000000.0000);
+//        BankBillsCreator.rubelsCashBox.setMoneySum(1000000.0000);
+//        return "home";
+//    }
     @RequestMapping(value = {"/end-bank-day"}, method = RequestMethod.GET)
     public String endBankDay(ModelMap model) {
         BankBillsCreator.dollarsBankBill.setMoneySum(
@@ -59,14 +61,32 @@ public class BankController {
         BankBillsCreator.rubelsCashBox.setMoneySum(EMPTY_CASH);
         List<Bill> userBills = billService.findAllBills();
         for (Bill bill : userBills) {
-            Integer p = bill.getDeposit().getPercent();
-            Double m = bill.getMoneySum();
-            Double percentToAdd = (double)p / (double) 100 * m / (double) 365;
-            bill.setMoneySum(bill.getMoneySum() + percentToAdd);
-            billService.updateBill(bill);
+            if (bill.getDeposit().getAgreementNumber() == 1) {
+                Integer p = bill.getDeposit().getPercent();
+                Double m = bill.getMoneySum();
+                Double percentToAdd = (double) p / (double) 100 * m / (double) 365;
+                bill.setMoneySum(bill.getMoneySum() + percentToAdd);
+                billService.updateBill(bill);
+            }
+
+            if (bill.getDeposit().getAgreementNumber() == 2) {
+                Double m = bill.getMoneySum();
+                Double moneyPerDay = MoneyUtil.countDayMoneyToPayByCredit(bill.getDeposit(), m);
+                bill.setMoneySum(bill.getMoneySum() - moneyPerDay);
+                billService.updateBill(bill);
+            }
         }
-        // TODO: 9/18/2016 for credits also 
+        // TODO: 9/18/2016 for credits also
+
+
         return "home";
+//        List<Bill> bills = new ArrayList<>();
+//        bills.add(BankBillsCreator.dollarsBankBill);
+//        bills.add(BankBillsCreator.dollarsCashBox);
+//        bills.add(BankBillsCreator.rubelsBankBill);
+//        bills.add(BankBillsCreator.rubelsCashBox);
+//        model.addAttribute("bills", bills);
+//        return "start";
     }
 
     @RequestMapping(value = {"/bank"}, method = RequestMethod.GET)

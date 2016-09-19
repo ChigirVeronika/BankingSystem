@@ -81,9 +81,9 @@ public class CreditController {
         String depositName = deposit.substring(8, last).replace("+", " ").replace("25", "");
         Deposit mainCredit = depositService.findByName(depositName);
         User user = userService.findById(userId);
+        //for any credit type
+        moneySum = MoneyUtil.countFullMoneyToPayByCredit(mainCredit, moneySum);
 
-        // TODO: 9/19/2016 change moneysum with formula 
-        
         Bill bill = new Bill("name " + user.getPassportSeries() + user.getPassportNumber(),
                 "number",
                 "code",
@@ -96,11 +96,11 @@ public class CreditController {
         final String DEPOSIT_MONEY_TYPE = mainCredit.getMoney();
         switch (DEPOSIT_MONEY_TYPE) {
             case "USD": {
-                BankBillsCreator.dollarsCashBox.setMoneySum(BankBillsCreator.dollarsCashBox.getMoneySum() - moneySum);
+                BankBillsCreator.dollarsBankBill.setMoneySum(BankBillsCreator.dollarsBankBill.getMoneySum() - moneySum);
             }
             break;
             case "RUB": {
-                BankBillsCreator.rubelsCashBox.setMoneySum(BankBillsCreator.rubelsCashBox.getMoneySum() - moneySum);
+                BankBillsCreator.rubelsBankBill.setMoneySum(BankBillsCreator.rubelsBankBill.getMoneySum() - moneySum);
             }
             break;
         }
@@ -109,9 +109,21 @@ public class CreditController {
 
     @RequestMapping(value = {"/close-credit-{billId}"}, method = RequestMethod.GET)
     public String closeUserCredit(@PathVariable Long billId) {
-        // TODO: 9/18/2016
-        // TODO: 9/19/2016 не хоум возвращать, а страничку где положить деньги за день - там готовая сумма и сабмит 
-        // TODO: 9/19/2016 а от сабмита в кассу 
+        Bill bill = billService.findById(billId);
+        String moneyType = bill.getDeposit().getMoney();
+        switch (moneyType) {
+            case "USD": {
+                BankBillsCreator.dollarsCashBox.setMoneySum(
+                        BankBillsCreator.dollarsCashBox.getMoneySum() + bill.getMoneySum());
+            }
+            break;
+            case "RUB": {
+                BankBillsCreator.rubelsCashBox.setMoneySum(
+                        BankBillsCreator.rubelsCashBox.getMoneySum() + bill.getMoneySum());
+            }
+            break;
+        }
+        billService.deleteBill(billId);
         return "home";
     }
 }

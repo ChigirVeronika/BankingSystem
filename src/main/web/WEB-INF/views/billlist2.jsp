@@ -22,7 +22,7 @@
                 <th>Credit Type</th>
                 <th>Start Date</th>
                 <th>End Date</th>
-                <th>Money</th>
+                <th>Money To Pay</th>
                 <th width="200"></th>
             </tr>
             </thead>
