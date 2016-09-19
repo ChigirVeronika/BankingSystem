@@ -81,6 +81,17 @@ public class CreditController {
         String depositName = deposit.substring(8, last).replace("+", " ").replace("25", "");
         Deposit mainCredit = depositService.findByName(depositName);
         User user = userService.findById(userId);
+        final String DEPOSIT_MONEY_TYPE = mainCredit.getMoney();
+        switch (DEPOSIT_MONEY_TYPE) {
+            case "USD": {
+                BankBillsCreator.dollarsBankBill.setMoneySum(BankBillsCreator.dollarsBankBill.getMoneySum() - moneySum);
+            }
+            break;
+            case "RUB": {
+                BankBillsCreator.rubelsBankBill.setMoneySum(BankBillsCreator.rubelsBankBill.getMoneySum() - moneySum);
+            }
+            break;
+        }
         //for any credit type
         moneySum = MoneyUtil.countFullMoneyToPayByCredit(mainCredit, moneySum);
 
@@ -93,17 +104,6 @@ public class CreditController {
                 user);
         billService.saveBill(bill);
 
-        final String DEPOSIT_MONEY_TYPE = mainCredit.getMoney();
-        switch (DEPOSIT_MONEY_TYPE) {
-            case "USD": {
-                BankBillsCreator.dollarsBankBill.setMoneySum(BankBillsCreator.dollarsBankBill.getMoneySum() - moneySum);
-            }
-            break;
-            case "RUB": {
-                BankBillsCreator.rubelsBankBill.setMoneySum(BankBillsCreator.rubelsBankBill.getMoneySum() - moneySum);
-            }
-            break;
-        }
         return "redirect:/home";
     }
 

@@ -35,9 +35,9 @@
                         <td> ${bill.deposit.getStartDate()} </td>
                         <td> ${bill.deposit.getEndDate()} </td>
                         <td> current: ${bill.moneySum} </td>
-                        <c:if test="${bill.deposit.getType()=='First'}" >
+                        <%--<c:if test="${bill.deposit.getType()=='First'}" >--%>
                             <td><a href="<c:url value='/close-credit-${bill.id}' />" class="btn btn-warning custom-width">Close</a></td>
-                        </c:if>
+                        <%--</c:if>--%>
 
                     </tr>
                 </c:if>

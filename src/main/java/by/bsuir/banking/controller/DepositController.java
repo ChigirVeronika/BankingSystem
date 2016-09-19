@@ -76,7 +76,7 @@ public class DepositController {
                 user);
         billService.saveBill(bill);
 
-        final String DEPOSIT_MONEY_TYPE = mainDeposit.getMoney();
+        String DEPOSIT_MONEY_TYPE = mainDeposit.getMoney();
         switch (DEPOSIT_MONEY_TYPE) {
             case "USD": {
                 BankBillsCreator.dollarsCashBox.setMoneySum(BankBillsCreator.dollarsCashBox.getMoneySum() + moneySum);

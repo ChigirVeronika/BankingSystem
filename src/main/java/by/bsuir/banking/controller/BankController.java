@@ -53,12 +53,7 @@ public class BankController {
 //    }
     @RequestMapping(value = {"/end-bank-day"}, method = RequestMethod.GET)
     public String endBankDay(ModelMap model) {
-        BankBillsCreator.dollarsBankBill.setMoneySum(
-                BankBillsCreator.dollarsBankBill.getMoneySum() + BankBillsCreator.dollarsCashBox.getMoneySum());
-        BankBillsCreator.dollarsCashBox.setMoneySum(EMPTY_CASH);
-        BankBillsCreator.rubelsBankBill.setMoneySum(
-                BankBillsCreator.rubelsBankBill.getMoneySum() + BankBillsCreator.rubelsCashBox.getMoneySum());
-        BankBillsCreator.rubelsCashBox.setMoneySum(EMPTY_CASH);
+
         List<Bill> userBills = billService.findAllBills();
         for (Bill bill : userBills) {
             if (bill.getDeposit().getAgreementNumber() == 1) {
@@ -73,20 +68,35 @@ public class BankController {
                 Double m = bill.getMoneySum();
                 Double moneyPerDay = MoneyUtil.countDayMoneyToPayByCredit(bill.getDeposit(), m);
                 bill.setMoneySum(bill.getMoneySum() - moneyPerDay);
+
+                String moneyType = bill.getDeposit().getMoney();
+                switch (moneyType) {
+                    case "USD": {
+                        BankBillsCreator.dollarsCashBox.setMoneySum(
+                                BankBillsCreator.dollarsCashBox.getMoneySum() + moneyPerDay);
+                    }
+                    break;
+                    case "RUB": {
+                        BankBillsCreator.rubelsCashBox.setMoneySum(
+                                BankBillsCreator.rubelsCashBox.getMoneySum() + moneyPerDay);
+                    }
+                    break;
+                }
                 billService.updateBill(bill);
             }
+
+
+
+            BankBillsCreator.dollarsBankBill.setMoneySum(
+                    BankBillsCreator.dollarsBankBill.getMoneySum() + BankBillsCreator.dollarsCashBox.getMoneySum());
+            BankBillsCreator.dollarsCashBox.setMoneySum(EMPTY_CASH);
+            BankBillsCreator.rubelsBankBill.setMoneySum(
+                    BankBillsCreator.rubelsBankBill.getMoneySum() + BankBillsCreator.rubelsCashBox.getMoneySum());
+            BankBillsCreator.rubelsCashBox.setMoneySum(EMPTY_CASH);
         }
-        // TODO: 9/18/2016 for credits also
 
 
         return "home";
-//        List<Bill> bills = new ArrayList<>();
-//        bills.add(BankBillsCreator.dollarsBankBill);
-//        bills.add(BankBillsCreator.dollarsCashBox);
-//        bills.add(BankBillsCreator.rubelsBankBill);
-//        bills.add(BankBillsCreator.rubelsCashBox);
-//        model.addAttribute("bills", bills);
-//        return "start";
     }
 
     @RequestMapping(value = {"/bank"}, method = RequestMethod.GET)
